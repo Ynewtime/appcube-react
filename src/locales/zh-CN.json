@@ -1,0 +1,11 @@
+{
+  "hello": "你好 {{name}}",
+  "back_to_index_page": "返回首页",
+
+  "app_error_dialog": "应用发生错误",
+  "retry": "点击重试",
+  "something_went_wrong": "错误详情",
+  "error_title": "错误名称",
+  "error_details": "展开错误详情",
+  "contact_support": "请联系管理员查看。"
+}

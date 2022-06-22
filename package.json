@@ -1,0 +1,71 @@
+{
+  "name": "appcube-react",
+  "private": true,
+  "packageManager": "pnpm@7.3.0",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "dev": "vite --port 3333 --open",
+    "prettier": "prettier --write --cache .",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
+    "build": "npm run prettier && npm run lint && tsc && vite build",
+    "preview": "vite preview",
+    "serve": "serve build -C",
+    "build:watch": "vite build -w",
+    "debug": "concurrently 'npm:serve' 'npm:build:watch'",
+    "zip": "tsno run scripts/zip.ts",
+    "upload": "NODE_NO_WARNINGS=1 tsno run scripts/upload.ts",
+    "ci": "npm run build && npm run upload"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec lint-staged --concurrent false"
+  },
+  "lint-staged": {
+    "*": [
+      "prettier --write --cache --ignore-unknown"
+    ]
+  },
+  "dependencies": {
+    "@unocss/reset": "^0.39.3",
+    "ahooks": "^3.5.0",
+    "axios": "^0.27.2",
+    "i18next": "^21.8.10",
+    "i18next-browser-languagedetector": "^6.1.4",
+    "jotai": "^1.7.2",
+    "ramda": "^0.28.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-error-boundary": "^3.1.4",
+    "react-i18next": "^11.17.2",
+    "react-router-dom": "^6.3.0",
+    "react-use": "^17.4.0",
+    "swr": "^1.3.0"
+  },
+  "devDependencies": {
+    "@iconify-json/heroicons-outline": "^1.1.1",
+    "@types/dotenv-flow": "^3.2.0",
+    "@types/node": "^18.0.0",
+    "@types/ramda": "^0.28.14",
+    "@types/react": "^18.0.14",
+    "@types/react-dom": "^18.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.29.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "@vitejs/plugin-react": "^2.0.0-beta.0",
+    "concurrently": "^7.2.2",
+    "dotenv-flow": "^3.2.0",
+    "eslint": "^8.18.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react": "^7.30.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "form-data": "^4.0.0",
+    "lint-staged": "^13.0.2",
+    "postcss-nested": "^5.0.6",
+    "prettier": "^2.7.1",
+    "serve": "^13.0.2",
+    "simple-git-hooks": "^2.8.0",
+    "tsno": "^2.0.0",
+    "typescript": "^4.7.4",
+    "unocss": "^0.39.3",
+    "vite": "^3.0.0-beta.1",
+    "zip-dir": "^2.0.0"
+  }
+}

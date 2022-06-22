@@ -1,0 +1,11 @@
+{
+  "hello": "Hello {{name}}",
+  "back_to_index_page": "Back To Index Page",
+
+  "app_error_dialog": "App Error Dialog",
+  "retry": "Retry",
+  "something_went_wrong": "Something went wrong:",
+  "error_title": "Error",
+  "error_details": "Details",
+  "contact_support": "Please contact Administrator for support."
+}

@@ -1,0 +1,41 @@
+/* THEME */
+:root {
+  --bg: white;
+  --color: theme('colors.slate.800');
+  --tint: theme('colors.slate.50');
+  --border: theme('colors.slate.400');
+}
+
+html.dark,
+[data-theme='dark'] {
+  --bg: theme('colors.slate.800');
+  --color: theme('colors.slate.50');
+  --tint: theme('colors.slate.700');
+  --border: theme('colors.slate.300');
+}
+
+/* CUSTOM */
+* {
+  scrollbar-color: auto;
+  scrollbar-width: auto;
+  &::-webkit-scrollbar {
+    @apply h-1 w-1;
+  }
+  &::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    @apply bg-$border rounded;
+  }
+}
+
+body {
+  @apply theme-base;
+
+  .hover-scale {
+    @apply transition ease-in-out duration-300 hover:scale-150;
+  }
+  .hover-larger {
+    @apply transition-all ease-in-out duration-300 hover:(w-12 h-12);
+  }
+}
