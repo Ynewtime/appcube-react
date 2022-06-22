@@ -1,16 +1,16 @@
 ###
-POST https://{domainName}/magno/gallery/asset/widget
+POST https://dev-sg.appcubecloud.com/magno/gallery/asset/widget
 Access-Token: 
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7LAsFjEt1cITGDye
 
 ------WebKitFormBoundary7LAsFjEt1cITGDye
 Content-Disposition: form-data; name="id"
 
-{id}
+{{$dotenv VITE_WIDGET_ID}}
 ------WebKitFormBoundary7LAsFjEt1cITGDye
 Content-Disposition: form-data; name="identifier"
 
-{widgetId}
+{widgetIdentifier}
 ------WebKitFormBoundary7LAsFjEt1cITGDye
 Content-Disposition: form-data; name="name"
 
