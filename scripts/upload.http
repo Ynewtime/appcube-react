@@ -1,0 +1,66 @@
+@baseUrl = {{$dotenv VITE_DOMAIN}}
+
+###
+
+# @name getAccessToken
+POST {{baseUrl}}/baas/auth/v1.0/oauth2/token?grant_type=client_credentials&client_id={{$dotenv VITE_CLIENT_ID}}&client_secret={{$dotenv VITE_CLIENT_SECRET}}
+
+###
+
+@accessToken = {{getAccessToken.response.body.access_token}}
+
+###
+
+# @name getWidgetInfo
+GET {{baseUrl}}/magno/gallery/asset/widget/{{$dotenv VITE_WIDGET_ID}}
+Access-Token: {{accessToken}}
+
+###
+
+@identifier = {{getWidgetInfo.response.body.content.libraryId}}
+@name = {{getWidgetInfo.response.body.content.pluginName}}
+@description = {{getWidgetInfo.response.body.content.pluginDescription}}
+@categoryId = {{getWidgetInfo.response.body.content.category.id}}
+@industryId = {{getWidgetInfo.response.body.content.industry.id}}
+@scenariosId = {{getWidgetInfo.response.body.content.scenarios[0].id}}
+
+###
+
+POST {{baseUrl}}/magno/gallery/asset/widget
+Access-Token: {{accessToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7LAsFjEt1cITGDye
+
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="id"
+
+{{$dotenv VITE_WIDGET_ID}}
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="identifier"
+
+{{identifier}}
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="name"
+
+{{name}}
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="description"
+
+{{description}}
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="file"; filename="Widget.zip"
+Content-Type: application/x-zip-compressed
+
+< ./temp/Widget.zip
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="category"
+
+{{categoryId}}
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="industry"
+
+{{industryId}}
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="scenario"
+
+{{scenariosId}}
+------WebKitFormBoundary7LAsFjEt1cITGDye--

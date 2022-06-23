@@ -6,15 +6,18 @@ import Unocss from 'unocss/vite'
 import type { UserConfig } from 'vite'
 // import { defineConfig, loadEnv } from 'vite'
 import { defineConfig } from 'vite'
-import dotenv from 'dotenv-flow'
+import { getAccessToken } from './scripts/envSetup'
 
-// Enable for Windows:
-dotenv.config()
-
-export default defineConfig(() => {
+export default defineConfig(async ({ mode }) => {
   // Has bug in Windows, disable for now:
   // process.env = { ...process.env, ...loadEnv(mode, __dirname) }
   const { VITE_DOMAIN } = process.env
+
+  // In production mode, generate a ACCESS_TOKEN first:
+  let ACCESS_TOKEN = ''
+  if (mode === 'production') {
+    ACCESS_TOKEN = await getAccessToken()
+  }
 
   const proxy = {
     target: VITE_DOMAIN,
@@ -40,6 +43,7 @@ export default defineConfig(() => {
     },
     define: {
       BUILD_TIME: JSON.stringify(new Date().toLocaleString()),
+      ACCESS_TOKEN: JSON.stringify(ACCESS_TOKEN),
     },
     plugins: [React({ babel: { plugins: [jotaiDebugLabel, jotaiReactRefresh] } }), Unocss()],
     resolve: {

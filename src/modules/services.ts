@@ -1,8 +1,13 @@
 import axios from 'axios'
-import { INTERVAL } from './constants'
-import { APPCUBE_SERVICE } from './enums'
+import { APPCUBE_SERVICE, INTERVAL } from './constants'
 
 axios.defaults.withCredentials = true
+
+// ====================================
+
+// Common API
+
+// ====================================
 
 export const getAccessToken = async () => {
   const {
@@ -17,35 +22,56 @@ export const getAccessToken = async () => {
   return access_token
 }
 
-export const getCsrfToken = async () => {
+export const getCsrfToken = async (accessToken?: string) => {
+  if (accessToken) axios.defaults.headers.common['Access-Token'] = accessToken
   const {
     data: { result },
   } = await axios.post<CommonResponse<string>>(APPCUBE_SERVICE.CSRF_TOKEN)
   return result
 }
 
-// ====================================
-
 // Handle Token
-
 if (import.meta.env.DEV) {
   const handleAccessToken = async () => {
-    axios.defaults.headers.common['Access-Token'] = await getAccessToken()
+    const accessToken = await getAccessToken()
+    if (accessToken) axios.defaults.headers.common['Access-Token'] = accessToken
+    else throw Error('No Access-Token')
   }
-  handleAccessToken()
+  await handleAccessToken()
   setInterval(handleAccessToken, INTERVAL)
 } else {
+  if (ACCESS_TOKEN) axios.defaults.headers.common['Access-Token'] = ACCESS_TOKEN
   const handleCsrfToken = async () => {
-    axios.defaults.headers.common['csrf-token'] = await getCsrfToken()
+    if (typeof HttpUtils !== 'undefined') {
+      HttpUtils.getCsrfToken((csrfToken) => {
+        delete axios.defaults.headers.common['Access-Token']
+        axios.defaults.headers.common['csrf-token'] = csrfToken
+      })
+    }
+    // else throw Error('No csrf-token')
     // Above code is equal to:
-    // if (typeof HttpUtils !== 'undefined') {
-    //   HttpUtils.getCsrfToken((csrfToken) => {
-    //     axios.defaults.headers.common['csrf-token'] = csrfToken
-    //   })
-    // }
+    // const csrfToken = await getCsrfToken()
+    // if (csrfToken) axios.defaults.headers.common['Csrf-Token'] = csrfToken
   }
   handleCsrfToken()
   setInterval(handleCsrfToken, INTERVAL)
 }
 
+export default axios
+
 // ====================================
+
+// Custom API
+
+// ====================================
+
+export const getStoreList = async (pageIndex = 1, pageSize = 50, mechantId = localStorage.getItem('merchantId')) => {
+  const {
+    data: { result },
+  } = await axios.post<CommonResponse<GetStoreListResult>>(APPCUBE_SERVICE.GET_STORE_LIST, {
+    pageIndex,
+    pageSize,
+    mechantId,
+  })
+  return result
+}
