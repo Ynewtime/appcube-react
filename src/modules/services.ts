@@ -64,14 +64,3 @@ export default axios
 // Custom API
 
 // ====================================
-
-export const getStoreList = async (pageIndex = 1, pageSize = 50, mechantId = localStorage.getItem('merchantId')) => {
-  const {
-    data: { result },
-  } = await axios.post<CommonResponse<GetStoreListResult>>(APPCUBE_SERVICE.GET_STORE_LIST, {
-    pageIndex,
-    pageSize,
-    mechantId,
-  })
-  return result
-}
