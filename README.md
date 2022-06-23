@@ -13,6 +13,8 @@ VITE_DOMAIN=Your development domain
 VITE_CLIENT_ID=Your client id
 VITE_CLIENT_SECRET=Your client secret
 VITE_WIDGET_ID=Your widget id
+VITE_NO_PROXY=By pass IPs or domains in intranet
+VITE_HTTP_PROXY=Proxy setting for intranet
 ```
 
 (5) Develop offline: `pnpm dev`
