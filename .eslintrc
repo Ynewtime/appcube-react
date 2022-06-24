@@ -21,5 +21,6 @@
     "@typescript-eslint/no-extra-semi": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off"
-  }
+  },
+  "ignorePatterns": ["build"]
 }

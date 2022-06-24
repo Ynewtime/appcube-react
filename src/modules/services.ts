@@ -48,10 +48,10 @@ if (import.meta.env.DEV) {
         axios.defaults.headers.common['csrf-token'] = csrfToken
       })
     }
-    // else throw Error('No csrf-token')
     // Above code is equal to:
     // const csrfToken = await getCsrfToken()
     // if (csrfToken) axios.defaults.headers.common['Csrf-Token'] = csrfToken
+    // else throw Error('No csrf-token')
   }
   handleCsrfToken()
   setInterval(handleCsrfToken, INTERVAL)

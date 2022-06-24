@@ -21,6 +21,5 @@
     },
     "preserveSymlinks": true
   },
-  "include": ["src", "scripts", "appcube.d.ts", "types.d.ts"],
-  "exclude": ["build"]
+  "include": ["src", "scripts", "appcube.d.ts", "types.d.ts"]
 }
