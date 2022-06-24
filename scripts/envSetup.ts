@@ -9,14 +9,14 @@ const { VITE_DOMAIN, VITE_CLIENT_ID, VITE_CLIENT_SECRET, VITE_NO_PROXY, VITE_HTT
 if (!VITE_DOMAIN) throw Error('No VITE_DOMAIN')
 if (!VITE_CLIENT_ID) throw Error('No VITE_CLIENT_ID')
 if (!VITE_CLIENT_SECRET) throw Error('No VITE_CLIENT_SECRET')
-if (!VITE_NO_PROXY) throw Error('No VITE_NO_PROXY')
-if (!VITE_HTTP_PROXY) throw Error('No VITE_HTTP_PROXY')
+
+if (VITE_HTTP_PROXY) {
+  process.env.GLOBAL_AGENT_NO_PROXY = VITE_NO_PROXY
+  process.env.GLOBAL_AGENT_HTTP_PROXY = VITE_HTTP_PROXY
+  bootstrap()
+}
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
-process.env.GLOBAL_AGENT_NO_PROXY = VITE_NO_PROXY
-process.env.GLOBAL_AGENT_HTTP_PROXY = VITE_HTTP_PROXY
-bootstrap()
-
 axios.defaults.baseURL = VITE_DOMAIN
 axios.defaults.withCredentials = true
 
