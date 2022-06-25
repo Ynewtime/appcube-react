@@ -1,3 +1,7 @@
+# Widget update workflow(the last http request can also be used as creating a widget)
+# 1. For updating a widget, first follow README.md and configure the `.env` file first, then run the request below in order
+# 2. For creating a widget, also configure the `.env` file then run directly the last request
+
 @baseUrl = {{$dotenv VITE_DOMAIN}}
 
 ###
@@ -26,6 +30,9 @@ Access-Token: {{accessToken}}
 
 ###
 
+# @name createOrUpdateWidget
+# If `id` is present in the body, then it's update. Otherwise create.
+# Also make sure the `identifier` is unique.
 POST {{baseUrl}}/magno/gallery/asset/widget
 Access-Token: {{accessToken}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7LAsFjEt1cITGDye

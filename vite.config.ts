@@ -6,12 +6,13 @@ import Unocss from 'unocss/vite'
 import type { UserConfig } from 'vite'
 // import { defineConfig, loadEnv } from 'vite'
 import { defineConfig } from 'vite'
-import { getAccessToken } from './scripts/envSetup'
+import { getAccessToken } from './scripts/services'
+
+const { VITE_DOMAIN } = process.env
 
 export default defineConfig(async ({ mode }) => {
   // Has bug in Windows, disable for now:
   // process.env = { ...process.env, ...loadEnv(mode, __dirname) }
-  const { VITE_DOMAIN } = process.env
 
   // In production mode, generate a ACCESS_TOKEN first:
   let ACCESS_TOKEN = ''

@@ -2,9 +2,10 @@
 import FormData from 'form-data'
 import buffer from './zip'
 import { WIDGET_ZIP_NAME } from './constants'
-import axios, { getAccessToken } from './envSetup'
+import axios, { getAccessToken } from './services'
+import APPCUBE_API from '../src/appcubeApi'
 
-const { VITE_DOMAIN, VITE_WIDGET_ID } = process.env
+const { VITE_WIDGET_ID, VITE_DOMAIN } = process.env // process.env had been configured by ./services file
 if (!VITE_WIDGET_ID) throw Error('No VITE_WIDGET_ID')
 
 try {
@@ -13,21 +14,33 @@ try {
   else console.log('TOKEN:', accessToken)
   axios.defaults.headers.common['Access-Token'] = accessToken
 
-  const {
-    data: {
-      content: { libraryId, pluginName, pluginDescription, category, industry, scenarios },
-    },
-  } = await axios.get<WidgetInfo>(`/magno/gallery/asset/widget/${VITE_WIDGET_ID}`)
-  if (!libraryId) throw Error(`No WidgetInfo fetched from id:${VITE_WIDGET_ID}`)
-  const identifier = libraryId
-  const name = pluginName
-  const description = pluginDescription
-  const categoryId = category?.id
-  const industryId = industry?.id
-  const scenariosId = scenarios?.length ? scenarios[0].id : ''
+  // If you need to create a new widget, you can leave the VITE_WIDGET_ID env variable and below varaibles empty
+  const id = VITE_WIDGET_ID
+  // For creating a new widget, you need to configure these property first:
+  let identifier = '' // Make sure the `identifier` is unique. e.g. t0000000000siw3nmxj9n_NewWidget
+  let name = '' // e.g. {"en_US":"Widget","zh_CN":"通用组件测试"}
+  let description = '' // e.g. {"en_US":"Widget","zh_CN":"通用组件测试"}
+  let categoryId = '' // e.g. 16f519d485e-328fa286-893e-43ea-830c-460a2ef178e5
+  let industryId = '' // e.g. 16c519d44af-361631af-9929-4822-a271-5dc702c81749
+  let scenariosId = '' // e.g. 00000000000000000001
+
+  if (id) {
+    const {
+      data: {
+        content: { libraryId, pluginName, pluginDescription, category, industry, scenarios },
+      },
+    } = await axios.get<WidgetInfo>(`${APPCUBE_API.WIDGET}/${VITE_WIDGET_ID}`)
+    if (!libraryId) throw Error(`No WidgetInfo fetched from id:${VITE_WIDGET_ID}`)
+    identifier = libraryId
+    name = pluginName
+    description = pluginDescription
+    categoryId = category?.id
+    industryId = industry?.id
+    scenariosId = scenarios?.length ? scenarios[0].id : ''
+  }
 
   console.table({
-    id: VITE_WIDGET_ID,
+    id,
     identifier,
     name,
     description,
@@ -37,7 +50,7 @@ try {
   })
 
   const form = new FormData()
-  form.append('id', VITE_WIDGET_ID)
+  form.append('id', id)
   form.append('identifier', identifier)
   form.append('name', name)
   form.append('description', description)
@@ -47,9 +60,9 @@ try {
   form.append('scenario', scenariosId)
   const {
     data: { responseMessage },
-  } = await axios.post<UploadResult>(`/magno/gallery/asset/widget`, form)
+  } = await axios.post<UploadResult>(APPCUBE_API.WIDGET, form)
   if (responseMessage === 'Success') {
-    console.log(`Check online: ${VITE_DOMAIN}/studio/index.html#/admin/widget/edit/1/${VITE_WIDGET_ID}`)
+    console.log(`${VITE_DOMAIN}/studio/index.html#/admin/widget/detail/${VITE_WIDGET_ID}`)
   }
 } catch (error: any) {
   console.error(error.response)

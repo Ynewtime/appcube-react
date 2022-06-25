@@ -1,5 +1,9 @@
+/**
+ *  Run Time Services
+ */
 import axios from 'axios'
-import { APPCUBE_SERVICE, INTERVAL } from './constants'
+import { INTERVAL } from '@/constants'
+import APPCUBE_API from '@/appcubeApi'
 
 axios.defaults.withCredentials = true
 
@@ -12,7 +16,7 @@ axios.defaults.withCredentials = true
 export const getAccessToken = async () => {
   const {
     data: { access_token },
-  } = await axios.post<TokenResult>(APPCUBE_SERVICE.ACCESS_TOKEN, null, {
+  } = await axios.post<TokenResult>(APPCUBE_API.ACCESS_TOKEN, null, {
     params: {
       grant_type: 'client_credentials',
       client_id: import.meta.env.VITE_CLIENT_ID,
@@ -26,7 +30,7 @@ export const getCsrfToken = async (accessToken?: string) => {
   if (accessToken) axios.defaults.headers.common['Access-Token'] = accessToken
   const {
     data: { result },
-  } = await axios.post<CommonResponse<string>>(APPCUBE_SERVICE.CSRF_TOKEN)
+  } = await axios.post<CommonResponse<string>>(APPCUBE_API.CSRF_TOKEN)
   return result
 }
 
