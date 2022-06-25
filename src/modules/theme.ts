@@ -30,13 +30,15 @@ export const ThemeProvider = ({ children }: { children: JSX.Element }) => {
     setTheme(newTheme)
     const newIsDark = ThemeUtils.getIsDark(theme, prefersDark)
     setDark(newIsDark)
-    ThemeUtils.handleThemeChange(newTheme, newIsDark)
+    if (import.meta.env.DEV) ThemeUtils.handleThemeChange(newTheme, newIsDark)
+    else ThemeUtils.handleThemeChange('light', false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prefersDark])
   React.useEffect(() => {
     const newTheme = ThemeUtils.getTheme(isDark, prefersDark)
     setTheme(newTheme)
-    ThemeUtils.handleThemeChange(newTheme, isDark)
+    if (import.meta.env.DEV) ThemeUtils.handleThemeChange(newTheme, isDark)
+    else ThemeUtils.handleThemeChange('light', false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDark])
 

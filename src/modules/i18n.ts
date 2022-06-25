@@ -3,16 +3,29 @@ import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import en from '@/locales/en.json'
 import zhCN from '@/locales/zh-CN.json'
+import { getCookie } from './utils'
 
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
+if (import.meta.env.DEV) {
+  i18n
+    .use(LanguageDetector)
+    .use(initReactI18next)
+    .init({
+      debug: true,
+      resources: {
+        en: { translation: en },
+        'zh-CN': { translation: zhCN },
+      },
+      fallbackLng: 'zh-CN',
+      interpolation: { escapeValue: false },
+    })
+} else {
+  i18n.use(initReactI18next).init({
+    lng: getCookie('locale') || undefined,
     resources: {
       en: { translation: en },
       'zh-CN': { translation: zhCN },
     },
     fallbackLng: 'zh-CN',
-    debug: !import.meta.env.PROD,
     interpolation: { escapeValue: false },
   })
+}

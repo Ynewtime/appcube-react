@@ -41,3 +41,19 @@ export const createLink = (rel: string, href: string, type?: string) => {
   if (type) link.setAttribute('type', type)
   document.head.appendChild(link)
 }
+
+export const getCookie = (key: string) => {
+  const name = `${key}=`
+  const decodedCookie = decodeURIComponent(document.cookie)
+  const cookieArray = decodedCookie.split(';')
+  for (let i = 0; i < cookieArray.length; i += 1) {
+    let item = cookieArray[i]
+    while (item.charAt(0) === ' ') {
+      item = item.substring(1)
+    }
+    if (item.indexOf(name) === 0) {
+      return item.substring(name.length, item.length)
+    }
+  }
+  return null
+}
