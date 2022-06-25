@@ -4,22 +4,12 @@ import jotaiReactRefresh from 'jotai/babel/plugin-react-refresh'
 import * as path from 'path'
 import Unocss from 'unocss/vite'
 import type { UserConfig } from 'vite'
-// import { defineConfig, loadEnv } from 'vite'
 import { defineConfig } from 'vite'
-import { getAccessToken } from './scripts/services'
+import './scripts/envSetup'
 
 const { VITE_DOMAIN } = process.env
 
-export default defineConfig(async ({ mode }) => {
-  // Has bug in Windows, disable for now:
-  // process.env = { ...process.env, ...loadEnv(mode, __dirname) }
-
-  // In production mode, generate a ACCESS_TOKEN first:
-  let ACCESS_TOKEN = ''
-  if (mode === 'production') {
-    ACCESS_TOKEN = await getAccessToken()
-  }
-
+export default defineConfig(async () => {
   const proxy = {
     target: VITE_DOMAIN,
     changeOrigin: true,
@@ -44,7 +34,6 @@ export default defineConfig(async ({ mode }) => {
     },
     define: {
       BUILD_TIME: JSON.stringify(new Date().toLocaleString()),
-      ACCESS_TOKEN: JSON.stringify(ACCESS_TOKEN),
     },
     plugins: [React({ babel: { plugins: [jotaiDebugLabel, jotaiReactRefresh] } }), Unocss()],
     resolve: {

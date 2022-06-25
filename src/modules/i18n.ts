@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import en from '@/locales/en.json'
 import zhCN from '@/locales/zh-CN.json'
-import { getCookie } from './utils'
+import { COOKIE_LOCALE } from '@/constants'
 
 if (import.meta.env.DEV) {
   i18n
@@ -20,7 +20,7 @@ if (import.meta.env.DEV) {
     })
 } else {
   i18n.use(initReactI18next).init({
-    lng: getCookie('locale') || undefined,
+    lng: COOKIE_LOCALE,
     resources: {
       en: { translation: en },
       'zh-CN': { translation: zhCN },

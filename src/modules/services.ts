@@ -44,18 +44,29 @@ if (import.meta.env.DEV) {
   await handleAccessToken()
   setInterval(handleAccessToken, INTERVAL)
 } else {
-  if (ACCESS_TOKEN) axios.defaults.headers.common['Access-Token'] = ACCESS_TOKEN
-  const handleCsrfToken = async () => {
+  // Make sure first request can be successful
+  axios.interceptors.request.use(async function (config) {
+    if (!config.headers) config.headers = {}
+    if (
+      config.url?.includes('/service/') &&
+      !Object.keys(config.headers).includes('csrf-token') &&
+      !Object.keys(config.headers.common).includes('csrf-token')
+    ) {
+      const res = await fetch(APPCUBE_API.CSRF_TOKEN, { method: 'POST' })
+      const { result } = await res.json()
+      if (result) {
+        config.headers['csrf-token'] = result
+        axios.defaults.headers.common['csrf-token'] = result
+      }
+    }
+    return config
+  })
+  const handleCsrfToken = () => {
     if (typeof HttpUtils !== 'undefined') {
       HttpUtils.getCsrfToken((csrfToken) => {
-        delete axios.defaults.headers.common['Access-Token']
         axios.defaults.headers.common['csrf-token'] = csrfToken
       })
     }
-    // Above code is equal to:
-    // const csrfToken = await getCsrfToken()
-    // if (csrfToken) axios.defaults.headers.common['Csrf-Token'] = csrfToken
-    // else throw Error('No csrf-token')
   }
   handleCsrfToken()
   setInterval(handleCsrfToken, INTERVAL)
