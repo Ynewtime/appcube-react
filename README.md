@@ -12,7 +12,8 @@
 VITE_DOMAIN=Your development domain
 VITE_CLIENT_ID=Your client id
 VITE_CLIENT_SECRET=Your client secret
-VITE_WIDGET_ID=Your widget id, e.q.: t0000000000siw3nmxj9n_NewWidget
+VITE_WIDGET_ID=Your widget id
+VITE_SCRIPT_NAME=Your script name, required when use `pnpm upload:script` or `pnpm ci:script`, e.g. Namespace__Script(After configure this env, also remember to create a script in scripts/appcube-scripts/Namespace__Script.ts before `pnpm upload:script` or `pnpm ci:script`)
 VITE_NO_PROXY=Bypass IPs or domains when developing with Huawei intranet, e.q.: 172.0.0.0/8,10.0.0.0/16,192.168.0.0/16,127.0.0.1,localhost,inhuawei.com,huawei.com
 VITE_HTTP_PROXY=Proxy setting for Huawei intranet, e.q.: http://{your w3 account}:{your w3 password}@proxy.huawei.com:8080
 ```
@@ -49,3 +50,6 @@ A: Use VS Code: [`REST Client`](https://github.com/Huachao/vscode-restclient) pl
 
 Q: I cannot run the `.http` file in intranet.
 A: Remember to check your [VS Code proxy settings](https://code.visualstudio.com/docs/setup/network#_legacy-proxy-server-support) first: `settings.json` -> `"http.proxy"`
+
+Q: Socket hang up error?
+A: Mainly because you are uploading to internet when connecting to intranet. For example when you are connecting to wlanaccess2(Huawei Intranet), and you try to use the `pnpm ci:script` or `pnpm ci` commands, you will get this `Socket hang up` error.

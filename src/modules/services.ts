@@ -30,7 +30,7 @@ export const getCsrfToken = async (accessToken?: string) => {
   if (accessToken) axios.defaults.headers.common['Access-Token'] = accessToken
   const {
     data: { result },
-  } = await axios.post<CommonResponse<string>>(APPCUBE_API.CSRF_TOKEN)
+  } = await axios.post<Res<string>>(APPCUBE_API.CSRF_TOKEN)
   return result
 }
 

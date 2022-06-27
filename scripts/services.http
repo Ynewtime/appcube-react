@@ -1,0 +1,58 @@
+# AppCube API
+
+@url = {{$dotenv VITE_DOMAIN}}
+
+###
+
+# @name getAccessToken
+POST {{url}}/baas/auth/v1.0/oauth2/token?grant_type=client_credentials&client_id={{$dotenv VITE_CLIENT_ID}}&client_secret={{$dotenv VITE_CLIENT_SECRET}}
+
+###
+
+@accessToken = {{getAccessToken.response.body.access_token}}
+
+###
+
+# @name getAllScript
+GET {{url}}/u-route/baas/metadata/v1.0/Script
+Access-Token: {{accessToken}}
+
+###
+
+# @name getScriptByCondition
+POST {{url}}/u-route/baas/data/v1.0/query/Script
+Access-Token: {{accessToken}}
+Content-Type: application/json
+
+{"condition":{"conjunction":"AND","conditions":[{"field":"name","operator":"eq","value":"{{$dotenv VITE_SCRIPT_NAME}}"}]},"options":{"orderby":[{"field":"active","order":"desc"},{"field":"createdDate","order":"desc"}],"limit":1}}
+
+###
+
+@scriptId = {{getScriptByCondition.response.body.result[0].id}}
+@scriptName = {{getScriptByCondition.response.body.result[0].name}}
+@scriptVersion = {{getScriptByCondition.response.body.result[0].version}}
+
+###
+
+# @name getScriptById
+GET {{url}}/u-route/baas/metadata/v1.0/Script/{{scriptId}}
+Access-Token: {{accessToken}}
+
+###
+
+# @name getScriptSignature
+GET {{url}}/u-route/baas/script/v1.0/signature/{{scriptName}}?version={{scriptVersion}}
+Access-Token: {{accessToken}}
+
+###
+
+# @name updateScriptById
+PUT {{url}}/u-route/baas/metadata/v1.0/Script/{{scriptId}}
+Access-Token: {{accessToken}}
+
+###
+
+# @name autosave
+POST {{url}}/u-route/baas/sys/v1.0/script/autosave
+Access-Token: {{accessToken}}
+Content-Type: application/json

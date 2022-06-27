@@ -4,6 +4,9 @@
   "packageManager": "pnpm@7.3.0",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
+    "build:script": "tsc -p scripts/appcube-scripts",
+    "upload:script": "cross-env NODE_NO_WARNINGS=1 tsno run scripts/uploadScript.ts",
+    "ci:script": "npm run build:script && npm run upload:script",
     "dev": "cross-env NODE_NO_WARNINGS=1 vite --port 3333 --open",
     "prettier": "prettier --write --cache .",
     "lint": "eslint --cache src/**/*.{js,jsx,ts,tsx}",
@@ -29,7 +32,6 @@
   },
   "dependencies": {
     "@unocss/reset": "^0.41.0",
-    "ahooks": "^3.5.0",
     "axios": "^0.27.2",
     "i18next": "^21.8.10",
     "i18next-browser-languagedetector": "^6.1.4",
@@ -40,8 +42,7 @@
     "react-error-boundary": "^3.1.4",
     "react-i18next": "^11.17.2",
     "react-router-dom": "^6.3.0",
-    "react-use": "^17.4.0",
-    "swr": "^1.3.0"
+    "react-use": "^17.4.0"
   },
   "devDependencies": {
     "@iconify-json/heroicons-outline": "^1.1.1",
@@ -55,6 +56,7 @@
     "@typescript-eslint/parser": "^5.29.0",
     "@vitejs/plugin-react": "^2.0.0-beta.0",
     "concurrently": "^7.2.2",
+    "consola": "^2.15.3",
     "cross-env": "^7.0.3",
     "dotenv-flow": "^3.2.0",
     "eslint": "^8.18.0",
@@ -71,7 +73,7 @@
     "tsno": "^2.0.0",
     "typescript": "^4.7.4",
     "unocss": "^0.41.0",
-    "vite": "^3.0.0-beta.2",
+    "vite": "^3.0.0-beta.3",
     "zip-dir": "^2.0.0"
   }
 }
