@@ -1,11 +1,11 @@
-import i18n from 'i18next'
-import { initReactI18next } from 'react-i18next'
-import LanguageDetector from 'i18next-browser-languagedetector'
+import { COOKIE_LOCALE, FULL_MODE } from '@/constants'
 import en from '@/locales/en.json'
 import zhCN from '@/locales/zh-CN.json'
-import { COOKIE_LOCALE } from '@/constants'
+import i18n from 'i18next'
+import LanguageDetector from 'i18next-browser-languagedetector'
+import { initReactI18next } from 'react-i18next'
 
-if (import.meta.env.DEV) {
+if (FULL_MODE || import.meta.env.DEV) {
   i18n
     .use(LanguageDetector)
     .use(initReactI18next)

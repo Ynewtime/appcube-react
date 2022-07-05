@@ -4,11 +4,11 @@
 
     /* Projects */
     /* Save .tsbuildinfo files to allow for incremental compilation of projects. */
-    "incremental": true,
+    // "incremental": true,
     /* Enable constraints that allow a TypeScript project to be used with project references. */
     // "composite": true,
     /* Specify the path to .tsbuildinfo incremental compilation file. */
-    // "tsBuildInfoFile": "./.tsbuildinfo",
+    // "tsBuildInfoFile": "./build/tsconfig.tsbuildinfo",
     /* Disable preferring source files instead of declaration files when referencing composite projects. */
     // "disableSourceOfProjectReferenceRedirect": true,
     /* Opt a project out of multi-project reference checking when editing. */
@@ -26,7 +26,7 @@
     /* Enable experimental support for TC39 stage 2 draft decorators. */
     "experimentalDecorators": true,
     /* Emit design-type metadata for decorated declarations in source files. */
-    // "emitDecoratorMetadata": true,
+    "emitDecoratorMetadata": true,
     /* Specify the JSX factory function used when targeting React JSX emit, e.g. 'React.createElement' or 'h'. */
     // "jsxFactory": "",
     /* Specify the JSX Fragment reference used for fragments when targeting React JSX emit e.g. 'React.Fragment' or 'Fragment'. */
@@ -88,7 +88,7 @@
     /* Specify a file that bundles all outputs into one JavaScript file. If 'declaration' is true, also designates a file that bundles all .d.ts output. */
     // "outFile": "./",
     /* Specify an output folder for all emitted files. */
-    // "outDir": "./",
+    "outDir": "./build",
     /* Disable emitting comments. */
     "removeComments": true,
     /* Disable emitting files from a compilation. */
@@ -138,7 +138,7 @@
 
     /* Type Checking */
     /* Enable all strict type-checking options. */
-    "strict": true,
+    // "strict": true,
     /* Enable error reporting for expressions and declarations with an implied 'any' type. */
     // "noImplicitAny": true,
     /* When type checking, take into account 'null' and 'undefined'. */
@@ -148,7 +148,7 @@
     /* Check that the arguments for 'bind', 'call', and 'apply' methods match the original function. */
     // "strictBindCallApply": true,
     /* Check for class properties that are declared but not set in the constructor. */
-    // "strictPropertyInitialization": true,
+    "strictPropertyInitialization": false,
     /* Enable error reporting when 'this' is given the type 'any'. */
     // "noImplicitThis": true,
     /* Default catch clause variables as 'unknown' instead of 'any'. */

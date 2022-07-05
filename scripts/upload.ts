@@ -1,19 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { success } from '@/modules/utils'
 import FormData from 'form-data'
-import buffer from './zip'
-import { WIDGET_ZIP_NAME } from './constants'
-import axios, { getAccessToken } from './services'
 import APPCUBE_API from '../src/appcubeApi'
+import { WIDGET_ZIP_NAME } from './constants'
+import axios from './services'
+import buffer from './zip'
 
 const { VITE_WIDGET_ID, VITE_DOMAIN } = process.env // process.env had been configured by ./services file
 if (!VITE_WIDGET_ID) throw Error('No VITE_WIDGET_ID')
 
 try {
-  const accessToken = await getAccessToken()
-  if (!accessToken) throw Error('Fetch accessToken error')
-  else console.log('TOKEN:', accessToken)
-  axios.defaults.headers.common['Access-Token'] = accessToken
-
   // If you need to create a new widget, you can leave the VITE_WIDGET_ID env variable and below varaibles empty
   const id = VITE_WIDGET_ID
   // For creating a new widget, you need to configure these property first:
@@ -61,10 +57,8 @@ try {
   const {
     data: { responseMessage },
   } = await axios.post<UploadResult>(APPCUBE_API.WIDGET, form)
-  if (responseMessage === 'Success') {
-    console.log(`${VITE_DOMAIN}/studio/index.html#/admin/widget/detail/${VITE_WIDGET_ID}`)
-  }
+  if (responseMessage === 'Success') success(`${VITE_DOMAIN}/studio/index.html#/admin/widget/detail/${VITE_WIDGET_ID}`)
 } catch (error: any) {
-  console.error(error.response)
+  error(error.response)
   throw Error(error)
 }

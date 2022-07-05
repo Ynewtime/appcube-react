@@ -43,7 +43,7 @@ let scenariosId = '' // e.g. 00000000000000000001
 
 (9) When developing with internet, **clear** the `VITE_NO_PROXY` and `VITE_HTTP_PROXY` env variable.
 
-## Q&A
+### Q&A
 
 Q: How do I run the `.http` file?
 A: Use VS Code: [`REST Client`](https://github.com/Huachao/vscode-restclient) plugin.

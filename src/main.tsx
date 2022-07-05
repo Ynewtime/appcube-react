@@ -1,15 +1,15 @@
+import ErrorFallback from '@/components/ErrorFallback'
+import PageLoading from '@/components/PageLoading'
+import '@/index.css'
+import '@/modules/i18n'
+import Router from '@/modules/Router'
 import { log } from '@/modules/utils'
 import setup from '@/setup'
-import Router from '@/modules/Router'
+import '@unocss/reset/tailwind.css'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom/client'
 import { ErrorBoundary } from 'react-error-boundary'
-import ErrorFallback from '@/components/ErrorFallback'
-import PageLoading from '@/components/PageLoading'
-import '@/modules/i18n'
-import '@unocss/reset/tailwind.css'
 import 'uno.css'
-import './index.css'
 
 log(`Build time: ${BUILD_TIME}`)
 

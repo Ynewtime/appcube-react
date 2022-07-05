@@ -1,17 +1,51 @@
+/* RESET */
+[type='text'],
+[type='email'],
+[type='url'],
+[type='password'],
+[type='number'],
+[type='date'],
+[type='datetime-local'],
+[type='month'],
+[type='search'],
+[type='tel'],
+[type='time'],
+[type='week'],
+[multiple],
+textarea,
+select {
+  font-size: inherit !important;
+  border-color: inherit !important;
+}
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ol,
+ul,
+dl {
+  @apply !m-0 !color-base;
+}
+
 /* THEME */
 :root {
   --bg: white;
-  --color: theme('colors.slate.800');
   --tint: theme('colors.slate.50');
-  --border: theme('colors.slate.400');
+  --color: theme('colors.slate.800');
+  --primary: theme('colors.blue.500');
+  --border: theme('colors.slate.200');
 }
 
 html.dark,
 [data-theme='dark'] {
   --bg: theme('colors.slate.800');
-  --color: theme('colors.slate.50');
   --tint: theme('colors.slate.700');
-  --border: theme('colors.slate.300');
+  --color: theme('colors.slate.50');
+  --primary: theme('colors.blue.400');
+  --border: theme('colors.slate.600');
 }
 
 /* CUSTOM */
@@ -30,7 +64,7 @@ html.dark,
 }
 
 body {
-  @apply theme-base;
+  @apply !theme-tint;
 
   .hover-scale {
     @apply transition ease-in-out duration-300 hover:scale-150;

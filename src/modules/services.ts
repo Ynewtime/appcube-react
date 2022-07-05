@@ -1,9 +1,9 @@
 /**
  *  Run Time Services
  */
-import axios from 'axios'
-import { INTERVAL } from '@/constants'
 import APPCUBE_API from '@/appcubeApi'
+import { GET_ACCESS_TOKEN_INTERVAL, GET_CSRF_TOKEN_INTERVAL } from '@/constants'
+import axios from 'axios'
 
 axios.defaults.withCredentials = true
 
@@ -26,14 +26,6 @@ export const getAccessToken = async () => {
   return access_token
 }
 
-export const getCsrfToken = async (accessToken?: string) => {
-  if (accessToken) axios.defaults.headers.common['Access-Token'] = accessToken
-  const {
-    data: { result },
-  } = await axios.post<Res<string>>(APPCUBE_API.CSRF_TOKEN)
-  return result
-}
-
 // Handle Token
 if (import.meta.env.DEV) {
   const handleAccessToken = async () => {
@@ -42,7 +34,7 @@ if (import.meta.env.DEV) {
     else throw Error('No Access-Token')
   }
   await handleAccessToken()
-  setInterval(handleAccessToken, INTERVAL)
+  setInterval(handleAccessToken, GET_ACCESS_TOKEN_INTERVAL)
 } else {
   // Make sure first request can be successful
   axios.interceptors.request.use(async function (config) {
@@ -69,7 +61,7 @@ if (import.meta.env.DEV) {
     }
   }
   handleCsrfToken()
-  setInterval(handleCsrfToken, INTERVAL)
+  setInterval(handleCsrfToken, GET_CSRF_TOKEN_INTERVAL)
 }
 
 export default axios

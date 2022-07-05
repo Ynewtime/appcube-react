@@ -1,8 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  *  Build Time Services
  */
+import APPCUBE_API from '@/appcubeApi'
+import { error, success } from '@/modules/utils'
 import axios from 'axios'
-import APPCUBE_API from '../src/appcubeApi'
+import dayjs from 'dayjs'
+import fs from 'fs'
+import path from 'path'
 import './envSetup'
 
 const { VITE_DOMAIN, VITE_CLIENT_ID, VITE_CLIENT_SECRET, VITE_SCRIPT_NAME } = process.env
@@ -14,11 +19,19 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 axios.defaults.baseURL = VITE_DOMAIN
 axios.defaults.withCredentials = true
 
-export default axios
-
 export const getAccessToken = async () => {
+  const cachePath = path.resolve(__dirname, './temp/cache.json')
+  if (fs.existsSync(cachePath)) {
+    try {
+      const cache = JSON.parse(fs.readFileSync(cachePath).toString())
+      if (dayjs(cache.time).isAfter(dayjs().subtract(1, 'hour')) && cache.accessToken) return cache.accessToken
+    } catch (e: any) {
+      error(e.message)
+      throw Error(e)
+    }
+  }
   const {
-    data: { access_token },
+    data: { access_token: accessToken },
   } = await axios.post<TokenResult>(APPCUBE_API.ACCESS_TOKEN, null, {
     params: {
       grant_type: 'client_credentials',
@@ -26,8 +39,16 @@ export const getAccessToken = async () => {
       client_secret: VITE_CLIENT_SECRET,
     },
   })
-  return access_token
+  fs.writeFileSync(cachePath, JSON.stringify({ time: new Date().toLocaleString(), accessToken }))
+  return accessToken
 }
+
+const accessToken = await getAccessToken()
+if (!accessToken) throw Error('Fetch accessToken error')
+else success(`Access-Token: ${accessToken}`)
+axios.defaults.headers.common['Access-Token'] = accessToken
+
+export default axios
 
 export const getScriptByName = async () => {
   if (!VITE_SCRIPT_NAME) throw Error(`No VITE_SCRIPT_NAME`)

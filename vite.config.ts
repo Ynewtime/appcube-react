@@ -7,9 +7,9 @@ import type { UserConfig } from 'vite'
 import { defineConfig } from 'vite'
 import './scripts/envSetup'
 
-const { VITE_DOMAIN } = process.env
-
 export default defineConfig(async () => {
+  const { VITE_DOMAIN } = process.env
+
   const proxy = {
     target: VITE_DOMAIN,
     changeOrigin: true,
