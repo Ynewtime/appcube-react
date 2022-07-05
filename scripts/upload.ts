@@ -6,12 +6,12 @@ import { WIDGET_ZIP_NAME } from './constants'
 import axios from './services'
 import buffer from './zip'
 
-const { VITE_WIDGET_ID, VITE_DOMAIN } = process.env // process.env had been configured by ./services file
-if (!VITE_WIDGET_ID) throw Error('No VITE_WIDGET_ID')
+const { APPCUBE_WIDGET_ID, APPCUBE_DOMAIN } = process.env // process.env had been configured by ./services file
+if (!APPCUBE_WIDGET_ID) throw Error('No APPCUBE_WIDGET_ID')
 
 try {
-  // If you need to create a new widget, you can leave the VITE_WIDGET_ID env variable and below varaibles empty
-  const id = VITE_WIDGET_ID
+  // If you need to create a new widget, you can leave the APPCUBE_WIDGET_ID env variable and below varaibles empty
+  const id = APPCUBE_WIDGET_ID
   // For creating a new widget, you need to configure these property first:
   let identifier = '' // Make sure the `identifier` is unique. e.g. t0000000000siw3nmxj9n_NewWidget
   let name = '' // e.g. {"en_US":"Widget","zh_CN":"通用组件测试"}
@@ -25,8 +25,8 @@ try {
       data: {
         content: { libraryId, pluginName, pluginDescription, category, industry, scenarios },
       },
-    } = await axios.get<WidgetInfo>(`${APPCUBE_API.WIDGET}/${VITE_WIDGET_ID}`)
-    if (!libraryId) throw Error(`No WidgetInfo fetched from id:${VITE_WIDGET_ID}`)
+    } = await axios.get<WidgetInfo>(`${APPCUBE_API.WIDGET}/${APPCUBE_WIDGET_ID}`)
+    if (!libraryId) throw Error(`No WidgetInfo fetched from id:${APPCUBE_WIDGET_ID}`)
     identifier = libraryId
     name = pluginName
     description = pluginDescription
@@ -57,7 +57,8 @@ try {
   const {
     data: { responseMessage },
   } = await axios.post<UploadResult>(APPCUBE_API.WIDGET, form)
-  if (responseMessage === 'Success') success(`${VITE_DOMAIN}/studio/index.html#/admin/widget/detail/${VITE_WIDGET_ID}`)
+  if (responseMessage === 'Success')
+    success(`${APPCUBE_DOMAIN}/studio/index.html#/admin/widget/detail/${APPCUBE_WIDGET_ID}`)
 } catch (error: any) {
   error(error.response)
   throw Error(error)

@@ -3,14 +3,14 @@ import path from 'path'
 import { error, success } from '../src/modules/utils'
 import { activateScript, deactivateScript, getScriptByName, updateScript } from './services'
 
-const { VITE_SCRIPT_NAME } = process.env
-if (!VITE_SCRIPT_NAME) throw Error('No VITE_SCRIPT_NAME')
-else success(`Script Name: ${VITE_SCRIPT_NAME}`)
+const { APPCUBE_SCRIPT_NAME } = process.env
+if (!APPCUBE_SCRIPT_NAME) throw Error('No APPCUBE_SCRIPT_NAME')
+else success(`Script Name: ${APPCUBE_SCRIPT_NAME}`)
 
 const getContent = (filePath: string) => fs.readFileSync(path.resolve(__dirname, filePath)).toString()
-const content = getContent(`./appcube-scripts/${VITE_SCRIPT_NAME}.ts`)
-const jscode = getContent(`./appcube-scripts/build/${VITE_SCRIPT_NAME}.js`)
-const sourceMap = getContent(`./appcube-scripts/build/${VITE_SCRIPT_NAME}.js.map`)
+const content = getContent(`./appcube-scripts/${APPCUBE_SCRIPT_NAME}.ts`)
+const jscode = getContent(`./appcube-scripts/build/${APPCUBE_SCRIPT_NAME}.js`)
+const sourceMap = getContent(`./appcube-scripts/build/${APPCUBE_SCRIPT_NAME}.js.map`)
 if (!content || !jscode || !sourceMap) throw Error('Service script param missed')
 
 const scriptInfo = await getScriptByName()

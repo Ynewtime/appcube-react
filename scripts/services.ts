@@ -10,13 +10,13 @@ import fs from 'fs'
 import path from 'path'
 import './envSetup'
 
-const { VITE_DOMAIN, VITE_CLIENT_ID, VITE_CLIENT_SECRET, VITE_SCRIPT_NAME } = process.env
-if (!VITE_DOMAIN) throw Error('No VITE_DOMAIN')
-if (!VITE_CLIENT_ID) throw Error('No VITE_CLIENT_ID')
-if (!VITE_CLIENT_SECRET) throw Error('No VITE_CLIENT_SECRET')
+const { APPCUBE_DOMAIN, APPCUBE_CLIENT_ID, APPCUBE_CLIENT_SECRET, APPCUBE_SCRIPT_NAME } = process.env
+if (!APPCUBE_DOMAIN) throw Error('No APPCUBE_DOMAIN')
+if (!APPCUBE_CLIENT_ID) throw Error('No APPCUBE_CLIENT_ID')
+if (!APPCUBE_CLIENT_SECRET) throw Error('No APPCUBE_CLIENT_SECRET')
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
-axios.defaults.baseURL = VITE_DOMAIN
+axios.defaults.baseURL = APPCUBE_DOMAIN
 axios.defaults.withCredentials = true
 
 export const getAccessToken = async () => {
@@ -35,8 +35,8 @@ export const getAccessToken = async () => {
   } = await axios.post<TokenResult>(APPCUBE_API.ACCESS_TOKEN, null, {
     params: {
       grant_type: 'client_credentials',
-      client_id: VITE_CLIENT_ID,
-      client_secret: VITE_CLIENT_SECRET,
+      client_id: APPCUBE_CLIENT_ID,
+      client_secret: APPCUBE_CLIENT_SECRET,
     },
   })
   fs.writeFileSync(cachePath, JSON.stringify({ time: new Date().toLocaleString(), accessToken }))
@@ -51,11 +51,11 @@ axios.defaults.headers.common['Access-Token'] = accessToken
 export default axios
 
 export const getScriptByName = async () => {
-  if (!VITE_SCRIPT_NAME) throw Error(`No VITE_SCRIPT_NAME`)
+  if (!APPCUBE_SCRIPT_NAME) throw Error(`No APPCUBE_SCRIPT_NAME`)
   const {
     data: { result },
   } = await axios.post<Res<ScriptInfo[]>>(APPCUBE_API.SCRIPT_DATA, {
-    condition: { conjunction: 'AND', conditions: [{ field: 'name', operator: 'eq', value: VITE_SCRIPT_NAME }] },
+    condition: { conjunction: 'AND', conditions: [{ field: 'name', operator: 'eq', value: APPCUBE_SCRIPT_NAME }] },
     options: {
       orderby: [
         { field: 'active', order: 'desc' },
@@ -64,7 +64,7 @@ export const getScriptByName = async () => {
       limit: 1,
     },
   })
-  if (!result?.length) throw Error(`No script fetched from scriptName: ${VITE_SCRIPT_NAME}`)
+  if (!result?.length) throw Error(`No script fetched from scriptName: ${APPCUBE_SCRIPT_NAME}`)
   return result[0]
 }
 

@@ -2,12 +2,12 @@
 # 1. For updating a widget, first follow README.md and configure the `.env` file first, then run the request below in order
 # 2. For creating a widget, also configure the `.env` file then run directly the last request
 
-@baseUrl = {{$dotenv VITE_DOMAIN}}
+@baseUrl = {{$dotenv APPCUBE_DOMAIN}}
 
 ###
 
 # @name getAccessToken
-POST {{baseUrl}}/baas/auth/v1.0/oauth2/token?grant_type=client_credentials&client_id={{$dotenv VITE_CLIENT_ID}}&client_secret={{$dotenv VITE_CLIENT_SECRET}}
+POST {{baseUrl}}/baas/auth/v1.0/oauth2/token?grant_type=client_credentials&client_id={{$dotenv APPCUBE_CLIENT_ID}}&client_secret={{$dotenv APPCUBE_CLIENT_SECRET}}
 
 ###
 
@@ -16,7 +16,7 @@ POST {{baseUrl}}/baas/auth/v1.0/oauth2/token?grant_type=client_credentials&clien
 ###
 
 # @name getWidgetInfo
-GET {{baseUrl}}/magno/gallery/asset/widget/{{$dotenv VITE_WIDGET_ID}}
+GET {{baseUrl}}/magno/gallery/asset/widget/{{$dotenv APPCUBE_WIDGET_ID}}
 Access-Token: {{accessToken}}
 
 ###
@@ -40,7 +40,7 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7LAsFjEt1cITGD
 ------WebKitFormBoundary7LAsFjEt1cITGDye
 Content-Disposition: form-data; name="id"
 
-{{$dotenv VITE_WIDGET_ID}}
+{{$dotenv APPCUBE_WIDGET_ID}}
 ------WebKitFormBoundary7LAsFjEt1cITGDye
 Content-Disposition: form-data; name="identifier"
 

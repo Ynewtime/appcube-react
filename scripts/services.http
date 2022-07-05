@@ -1,11 +1,11 @@
 # AppCube API
 
-@url = {{$dotenv VITE_DOMAIN}}
+@url = {{$dotenv APPCUBE_DOMAIN}}
 
 ###
 
 # @name getAccessToken
-POST {{url}}/baas/auth/v1.0/oauth2/token?grant_type=client_credentials&client_id={{$dotenv VITE_CLIENT_ID}}&client_secret={{$dotenv VITE_CLIENT_SECRET}}
+POST {{url}}/baas/auth/v1.0/oauth2/token?grant_type=client_credentials&client_id={{$dotenv APPCUBE_CLIENT_ID}}&client_secret={{$dotenv APPCUBE_CLIENT_SECRET}}
 
 ###
 
@@ -24,7 +24,7 @@ POST {{url}}/u-route/baas/data/v1.0/query/Script
 Access-Token: {{accessToken}}
 Content-Type: application/json
 
-{"condition":{"conjunction":"AND","conditions":[{"field":"name","operator":"eq","value":"{{$dotenv VITE_SCRIPT_NAME}}"}]},"options":{"orderby":[{"field":"active","order":"desc"},{"field":"createdDate","order":"desc"}],"limit":1}}
+{"condition":{"conjunction":"AND","conditions":[{"field":"name","operator":"eq","value":"{{$dotenv APPCUBE_SCRIPT_NAME}}"}]},"options":{"orderby":[{"field":"active","order":"desc"},{"field":"createdDate","order":"desc"}],"limit":1}}
 
 ###
 

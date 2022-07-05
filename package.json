@@ -9,7 +9,7 @@
     "ci:script": "npm run build:script && npm run upload:script",
     "dev": "cross-env NODE_NO_WARNINGS=1 vite --port 3333 --open",
     "prettier": "prettier --write --cache .",
-    "lint": "eslint --cache --fix src/**/*.{js,jsx,ts,tsx} scripts/*.ts",
+    "lint": "eslint --cache --fix src/**/*.{ts,tsx} scripts/*.ts",
     "build": "npm run prettier && npm run lint && tsc && cross-env NODE_NO_WARNINGS=1 vite build",
     "preview": "vite preview",
     "serve": "serve build -C",
@@ -26,7 +26,7 @@
     "*": [
       "prettier --write --cache --ignore-unknown"
     ],
-    "src/**/*.{js,jsx,ts,tsx}": [
+    "src/**/*.{ts,tsx}": [
       "eslint --cache --fix"
     ],
     "scripts/*.ts": [
