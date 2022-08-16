@@ -27,10 +27,56 @@ Access-Token: {{accessToken}}
 @categoryId = {{getWidgetInfo.response.body.content.category.id}}
 @industryId = {{getWidgetInfo.response.body.content.industry.id}}
 @scenariosId = {{getWidgetInfo.response.body.content.scenarios[0].id}}
+@iconFile
 
 ###
 
-# @name createOrUpdateWidget
+# @name createWidget
+# If `id` is present in the body, then it's update. Otherwise create.
+# Also make sure the `identifier` is unique.
+POST {{baseUrl}}/magno/gallery/asset/widget
+Access-Token: {{accessToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7LAsFjEt1cITGDye
+
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="identifier"
+
+t{{$dotenv APPCUBE_TENANT_ID}}_Widget
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="name"
+
+{"zh_CN":"测试高级组件","en_US":"Widget"}
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="description"
+
+{"zh_CN":"测试高级组件","en_US":"Widget"}
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="file"; filename="Widget.zip"
+Content-Type: application/x-zip-compressed
+
+< ./temp/Widget.zip
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="category"
+
+16f519d485e-328fa286-893e-43ea-830c-460a2ef178e5
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="industry"
+
+16c519d44af-361631af-9929-4822-a271-5dc702c81749
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="scenario"
+
+00000000000000000001
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="iconFile"; filename="pwa-192x192.png"
+Content-Type: application/x-zip-compressed
+
+< ../public/pwa-192x192.png
+------WebKitFormBoundary7LAsFjEt1cITGDye--
+
+###
+
+# @name updateWidget
 # If `id` is present in the body, then it's update. Otherwise create.
 # Also make sure the `identifier` is unique.
 POST {{baseUrl}}/magno/gallery/asset/widget
@@ -70,4 +116,9 @@ Content-Disposition: form-data; name="industry"
 Content-Disposition: form-data; name="scenario"
 
 {{scenariosId}}
+------WebKitFormBoundary7LAsFjEt1cITGDye
+Content-Disposition: form-data; name="iconFile"; filename="pwa-192x192.png"
+Content-Type: application/x-zip-compressed
+
+< ../public/pwa-192x192.png
 ------WebKitFormBoundary7LAsFjEt1cITGDye--

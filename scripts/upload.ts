@@ -13,7 +13,7 @@ try {
   // If you need to create a new widget, you can leave the APPCUBE_WIDGET_ID env variable and below varaibles empty
   const id = APPCUBE_WIDGET_ID
   // For creating a new widget, you need to configure these property first:
-  let identifier = '' // Make sure the `identifier` is unique. e.g. t0000000000siw3nmxj9n_NewWidget
+  let identifier = '' // Make sure the `identifier` is unique. e.g. t0000000000vF8747q4zR_WidgetName, the rule is `t + tenantId + _ + widgetName`
   let name = '' // e.g. {"en_US":"Widget","zh_CN":"通用组件测试"}
   let description = '' // e.g. {"en_US":"Widget","zh_CN":"通用组件测试"}
   let categoryId = '' // e.g. 16f519d485e-328fa286-893e-43ea-830c-460a2ef178e5

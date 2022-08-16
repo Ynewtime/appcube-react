@@ -12,6 +12,7 @@
 APPCUBE_DOMAIN=Your development domain
 APPCUBE_CLIENT_ID=Your client id
 APPCUBE_CLIENT_SECRET=Your client secret
+APPCUBE_TENANT_ID=Your tenant id
 APPCUBE_WIDGET_ID=Your widget id
 APPCUBE_SCRIPT_NAME=Your script name, required when use `pnpm upload:script` or `pnpm ci:script`, e.g. Namespace__Script(After configure this env, also remember to create a script in scripts/appcube-scripts/Namespace__Script.ts before `pnpm upload:script` or `pnpm ci:script`)
 NO_PROXY=Bypass IPs or domains when developing with Huawei intranet, e.q.: 172.0.0.0/8,10.0.0.0/16,192.168.0.0/16,127.0.0.1,localhost,inhuawei.com,huawei.com
@@ -20,12 +21,14 @@ HTTP_PROXY=Proxy setting for Huawei intranet, e.q.: http://{your w3 account}:{yo
 
 `APPCUBE_DOMAIN`, `APPCUBE_CLIENT_ID` and `APPCUBE_CLIENT_SECRET` are required.
 
+`APPCUBE_TENANT_ID` is now only for creating a new widget using `createWidget` service inside `scripts/upload.http`.
+
 If `APPCUBE_WIDGET_ID` is configured, you are updating the widget.
 Otherwise you are creating a new one. In this case make sure you configured `scripts/upload.ts` first:
 
 ```
 // For creating a new widget, you need to configure these property first:
-let identifier = '' // Make sure the `identifier` is unique. e.g. t0000000000siw3nmxj9n_NewWidget
+let identifier = '' // Make sure the `identifier` is unique. e.g. t0000000000vF8747q4zR_WidgetName, the rule is `t + tenantId + _ + widgetName`
 let name = '' // e.g. {"en_US":"Widget","zh_CN":"通用组件测试"}
 let description = '' // e.g. {"en_US":"Widget","zh_CN":"通用组件测试"}
 let categoryId = '' // e.g. 16f519d485e-328fa286-893e-43ea-830c-460a2ef178e5
