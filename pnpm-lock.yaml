@@ -4,7 +4,7 @@ specifiers:
   '@iconify-json/heroicons-outline': ^1.1.2
   '@types/dotenv-flow': ^3.2.0
   '@types/global-agent': ^2.1.1
-  '@types/node': ^18.7.6
+  '@types/node': ^18.7.8
   '@types/ramda': ^0.28.15
   '@types/react': ^18.0.17
   '@types/react-dom': ^18.0.6
@@ -64,7 +64,7 @@ devDependencies:
   '@iconify-json/heroicons-outline': 1.1.2
   '@types/dotenv-flow': 3.2.0
   '@types/global-agent': 2.1.1
-  '@types/node': 18.7.6
+  '@types/node': 18.7.8
   '@types/ramda': 0.28.15
   '@types/react': 18.0.17
   '@types/react-dom': 18.0.6
@@ -541,8 +541,8 @@ packages:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
     dev: true
 
-  /@types/node/18.7.6:
-    resolution: {integrity: sha512-EdxgKRXgYsNITy5mjjXjVE/CS8YENSdhiagGrLqjG0pvA2owgJ6i4l7wy/PFZGC0B1/H20lWKN7ONVDNYDZm7A==}
+  /@types/node/18.7.8:
+    resolution: {integrity: sha512-/YP55EMK2341JkODUb8DM9O0x1SIz2aBvyF33Uf1c76St3VpsMXEIW0nxuKkq/5cxnbz0RD9cfwNZHEAZQD3ag==}
     dev: true
 
   /@types/prop-types/15.7.5:
