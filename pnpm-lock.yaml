@@ -1,10 +1,10 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@iconify-json/heroicons-outline': ^1.1.2
+  '@iconify-json/heroicons-outline': ^1.1.4
   '@types/dotenv-flow': ^3.2.0
   '@types/global-agent': ^2.1.1
-  '@types/node': ^18.7.11
+  '@types/node': ^18.7.13
   '@types/ramda': ^0.28.15
   '@types/react': ^18.0.17
   '@types/react-dom': ^18.0.6
@@ -61,10 +61,10 @@ dependencies:
   react-use: 17.4.0_biqbaboplfbrettd7655fr4n2y
 
 devDependencies:
-  '@iconify-json/heroicons-outline': 1.1.2
+  '@iconify-json/heroicons-outline': 1.1.4
   '@types/dotenv-flow': 3.2.0
   '@types/global-agent': 2.1.1
-  '@types/node': 18.7.11
+  '@types/node': 18.7.13
   '@types/ramda': 0.28.15
   '@types/react': 18.0.17
   '@types/react-dom': 18.0.6
@@ -431,8 +431,8 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@iconify-json/heroicons-outline/1.1.2:
-    resolution: {integrity: sha512-XsOWcUhdvu3eNURW40hlC2Wrc0cSNWwD+p+UeX57h/qwwDzibIMLeBuqhz9d1FjxHeiM86WQUc4QFB1SK2BGVw==}
+  /@iconify-json/heroicons-outline/1.1.4:
+    resolution: {integrity: sha512-H59TKT8dK6SDonC0NXeT021Erhq7n0apg+41cUDFgv3Zps4x+2t2Sd3QWI5cs6sW/kpOlY8DTP0xUtF5T/bp4w==}
     dependencies:
       '@iconify/types': 1.1.0
     dev: true
@@ -541,8 +541,8 @@ packages:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
     dev: true
 
-  /@types/node/18.7.11:
-    resolution: {integrity: sha512-KZhFpSLlmK/sdocfSAjqPETTMd0ug6HIMIAwkwUpU79olnZdQtMxpQP+G1wDzCH7na+FltSIhbaZuKdwZ8RDrw==}
+  /@types/node/18.7.13:
+    resolution: {integrity: sha512-46yIhxSe5xEaJZXWdIBP7GU4HDTG8/eo0qd9atdiL+lFpA03y8KS+lkTN834TWJj5767GbWv4n/P6efyTFt1Dw==}
     dev: true
 
   /@types/prop-types/15.7.5:

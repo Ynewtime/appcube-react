@@ -49,10 +49,10 @@
     "react-use": "^17.4.0"
   },
   "devDependencies": {
-    "@iconify-json/heroicons-outline": "^1.1.2",
+    "@iconify-json/heroicons-outline": "^1.1.4",
     "@types/dotenv-flow": "^3.2.0",
     "@types/global-agent": "^2.1.1",
-    "@types/node": "^18.7.11",
+    "@types/node": "^18.7.13",
     "@types/ramda": "^0.28.15",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
