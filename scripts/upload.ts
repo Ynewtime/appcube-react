@@ -57,8 +57,7 @@ try {
   const {
     data: { responseMessage },
   } = await axios.post<UploadResult>(APPCUBE_API.WIDGET, form)
-  if (responseMessage === 'Success')
-    success(`${APPCUBE_DOMAIN}/studio/index.html#/admin/widget/detail/${APPCUBE_WIDGET_ID}`)
+  if (responseMessage === 'Success') success(`${APPCUBE_DOMAIN}/studio/index.html#/admin/widget/detail/${APPCUBE_WIDGET_ID}`)
 } catch (error: any) {
   error(error.response)
   throw Error(error)

@@ -25,6 +25,80 @@ interface BingoRequire extends BingoRequireFunction {
 }
 
 /**
+ * module the bingo module global variable
+ */
+declare var module: BingoModule
+/**
+ * require the bingo module require function
+ */
+declare var require: BingoRequire
+/**
+ * exports the bingo module exports variable
+ */
+declare var exports: any
+/**
+ * __filename the module's filename
+ */
+declare var __filename: string
+/**
+ * __dirname the module's dir name
+ */
+declare var __dirname: string
+
+/**
+ * Console the bingo's console class.
+ */
+interface Console {
+  /**
+   * assert assert a value
+   * @param value
+   * @param message
+   * @param optionalParams
+   */
+  assert(value: any, message?: string, ...optionalParams: any[]): void
+
+  dir(obj: any, options?: { showHidden?: boolean; depth?: number; colors?: boolean }): void
+
+  /**
+   * error write error log message
+   * @param message the first message
+   * @param optionalParams the rest message
+   */
+  error(message?: any, ...optionalParams: any[]): void
+
+  /**
+   * info write info log message
+   * @param message the first message
+   * @param optionalParams the rest message
+   */
+  info(message?: any, ...optionalParams: any[]): void
+
+  /**
+   * log write debug log message
+   * @param message the first message
+   * @param optionalParams the rest message
+   */
+  log(message?: any, ...optionalParams: any[]): void
+
+  /**
+   * debug write debug log message
+   * @param message the first message
+   * @param optionalParams the rest message
+   */
+  debug(message?: any, ...optionalParams: any[]): void
+
+  time(label: string): void
+
+  timeEnd(label: string): void
+
+  trace(message?: any, ...optionalParams: any[]): void
+
+  warn(message?: any, ...optionalParams: any[]): void
+}
+
+declare var console: Console
+
+/**
  * Action's Object options
  */
 interface ObjectOptions {
@@ -124,7 +198,7 @@ interface Action {
 /**
  * Action的全局对象，描述action的基本信息.
  */
-declare const action: Action
+declare var action: Action
 
 /**
  * useObject to mark the object used by script.
@@ -408,7 +482,7 @@ interface BPMMetadataStartEvent extends BPMMetadataBaseEvent {
 /**
  * bpm metadata end event struct
  */
-type BPMMetadataEndEvent = BPMMetadataBaseEvent
+interface BPMMetadataEndEvent extends BPMMetadataBaseEvent {}
 
 /**
  * bpm metadata send event struct
@@ -575,7 +649,7 @@ interface BPMMetadataBaseGateway extends BPMMetadataBase {
 /**
  * bpm metadata exclusive gateway struct
  */
-type BPMMetadataExclusiveGateway = BPMMetadataBaseGateway
+interface BPMMetadataExclusiveGateway extends BPMMetadataBaseGateway {}
 
 /**
  * bpm metadata event gateway struct
@@ -720,6 +794,109 @@ interface Entity {
   readonly installedPackage?: Lookup
   readonly custom?: Checkbox
 }
+
+// please see lib.es2015.collection.d.ts
+/// <reference no-default-lib="true"/>
+
+interface Map<K, V> {
+  clear(): void
+
+  delete(key: K): boolean
+
+  forEach(callbackfn: (value: V, key: K, map: Map<K, V>) => void, thisArg?: any): void
+
+  get(key: K): V | undefined
+
+  has(key: K): boolean
+
+  set(key: K, value: V): this
+
+  readonly size: number
+}
+
+interface MapConstructor {
+  new (): Map<any, any>
+
+  new <K, V>(entries?: readonly (readonly [K, V])[] | null): Map<K, V>
+
+  readonly prototype: Map<any, any>
+}
+
+declare var Map: MapConstructor
+
+interface ReadonlyMap<K, V> {
+  forEach(callbackfn: (value: V, key: K, map: ReadonlyMap<K, V>) => void, thisArg?: any): void
+
+  get(key: K): V | undefined
+
+  has(key: K): boolean
+
+  readonly size: number
+}
+
+interface WeakMap<K extends object, V> {
+  delete(key: K): boolean
+
+  get(key: K): V | undefined
+
+  has(key: K): boolean
+
+  set(key: K, value: V): this
+}
+
+interface WeakMapConstructor {
+  new <K extends object = object, V = any>(entries?: readonly [K, V][] | null): WeakMap<K, V>
+
+  readonly prototype: WeakMap<object, any>
+}
+
+declare var WeakMap: WeakMapConstructor
+
+interface Set<T> {
+  add(value: T): this
+
+  clear(): void
+
+  delete(value: T): boolean
+
+  forEach(callbackfn: (value: T, value2: T, set: Set<T>) => void, thisArg?: any): void
+
+  has(value: T): boolean
+
+  readonly size: number
+}
+
+interface SetConstructor {
+  new <T = any>(values?: readonly T[] | null): Set<T>
+
+  readonly prototype: Set<any>
+}
+
+declare var Set: SetConstructor
+
+interface ReadonlySet<T> {
+  forEach(callbackfn: (value: T, value2: T, set: ReadonlySet<T>) => void, thisArg?: any): void
+
+  has(value: T): boolean
+
+  readonly size: number
+}
+
+interface WeakSet<T extends object> {
+  add(value: T): this
+
+  delete(value: T): boolean
+
+  has(value: T): boolean
+}
+
+interface WeakSetConstructor {
+  new <T extends object = object>(values?: readonly T[] | null): WeakSet<T>
+
+  readonly prototype: WeakSet<object>
+}
+
+declare var WeakSet: WeakSetConstructor
 
 declare module 'runtime' {
   /**
@@ -1099,14 +1276,7 @@ declare module 'sys' {
    * @param input the request input parameters.
    * @param smtpHost email SMTP server ip:port (optional)
    */
-  export declare function sendCustomEmail(
-    userName: string,
-    password: string,
-    sender: string,
-    template: string,
-    input: Dict,
-    smtpHost?: string,
-  ): Dict
+  export declare function sendCustomEmail(userName: string, password: string, sender: string, template: string, input: Dict, smtpHost?: string): Dict
   /**
    * 发送kafka事件
    *
@@ -1139,7 +1309,7 @@ declare module 'sys' {
     Independent = 1,
   }
   /**
-   * 调用flow
+   *　调用flow
    *
    * @example
    * ```ts
@@ -1151,7 +1321,7 @@ declare module 'sys' {
    *
    * @param flowName flow名称
    * @param param flow调用参数
-   * @param flag @deprecated 事件标识，不建议使用
+   * @param flag 事件标识，不建议使用
    *
    * @return flow输出参数
    */
@@ -1668,7 +1838,7 @@ declare module 'context' {
      * 特别注意：
      * 如果通过API改变了脚本的返回内容，则AppCube开发studio中脚本调试窗口无法正确处理新的响应值。
      * 输出参数，日志窗口会没有任何响应。
-
+ 
      * @param value 特殊响应值
      */
     setBody(value: any): void
@@ -1705,6 +1875,31 @@ declare module 'context' {
    * 获取脚本执行触发请求类型
    */
   export declare function getRequestType(): RequestType
+  /**
+   * 设置请求上下的变量
+   * 只支持string类型的变量，复杂对象，调用者需要自己采用JSON模块来进行序列化与反序列化
+   * 如果存放的变量类型不是string类型，不作任何隐式转换，接口抛异常
+   * 请求上下文local变量总大小限制为1MB,key的总大小也限制为1MB，不可配置
+   * 变量个数限制为1000个，不可配置
+   * @param key 变量名
+   * @param vavlue 变量值
+   */
+  export declare function setLocalValue(key: string, value: string): void
+  /**
+   * 获取请求上下文变量
+   * @param key 变量名
+   * @returns 变量值，如果变量名不存在，返回undefined
+   */
+  export declare function getLocalValue(key: string): string | null
+  /**
+   * 删除请求上下变量
+   * @param key 变量名
+   */
+  export declare function deleteLocalValue(key: string): void
+  /**
+   * 获取请求上下变量名列表
+   */
+  export declare function localKeys(): string[]
 }
 
 declare module 'decimal' {
@@ -1899,14 +2094,7 @@ declare module 'decimal' {
    *
    * @returns Formatted currency expression character string.
    */
-  export declare function fmtCurrency(
-    value: number,
-    precision: number,
-    format: string,
-    symbol: string,
-    decimal: string,
-    thousand: string,
-  ): string
+  export declare function fmtCurrency(value: number, precision: number, format: string, symbol: string, decimal: string, thousand: string): string
   /**
    * format currency value with organization format
    *
@@ -2576,11 +2764,7 @@ declare module 'crypto' {
    * @param plainText 明文
    * @param padding 填充模式, 默认值为PKCS1。
    */
-  export declare function publicEncrypt(
-    publicKey: buffer.Buffer,
-    plainText: buffer.Buffer,
-    padding?: RSAPadding,
-  ): buffer.Buffer
+  export declare function publicEncrypt(publicKey: buffer.Buffer, plainText: buffer.Buffer, padding?: RSAPadding): buffer.Buffer
   /**
    * 使用rsa私钥解密
    *
@@ -2601,11 +2785,7 @@ declare module 'crypto' {
    * @param cipherText 密文
    * @param padding 填充模式, 默认值为PKCS1
    */
-  export declare function privateDecrypt(
-    privateKey: buffer.Buffer,
-    cipherText: buffer.Buffer,
-    padding?: RSAPadding,
-  ): buffer.Buffer
+  export declare function privateDecrypt(privateKey: buffer.Buffer, cipherText: buffer.Buffer, padding?: RSAPadding): buffer.Buffer
   /**
    * 使用rsa私钥加密，不建议使用这种方式来加密，不符合rsa的设计理念，存在安全风险。
    *
@@ -2757,13 +2937,7 @@ declare module 'crypto' {
    * @param keyLen 生成hash key长度. 注意：小于32字节，在某些情况下可能不够安全
    * @param algorithm hash算法名称
    */
-  export declare function pbkdf2(
-    password: buffer.Buffer,
-    salt: buffer.Buffer,
-    iterations: number,
-    keyLen: number,
-    algorithm: string,
-  ): buffer.Buffer
+  export declare function pbkdf2(password: buffer.Buffer, salt: buffer.Buffer, iterations: number, keyLen: number, algorithm: string): buffer.Buffer
   /**
    * 生成安全随机字符串
    *
@@ -3021,46 +3195,46 @@ declare module 'db' {
     [id: string]: any
   }
   /**
- * ## 对象查询的条件支持的操作符
- *
- * ### 操作符列表
- *
- * | datatype |  support operator |  comment |
- * | ------- | --------------- | --------- |
- * | AutoNumber      | eq, ne, le, ge, lt, gt, in, contains, startwith, endwith, isnull, isnotnull | |
- * | CheckBox        | eq, ne, isnull, isnotnull | |
- * | Currency        | eq, ne, le, ge, lt, gt, in, isnull, isnotnull | |
- * | Date            | eq, ne, le, ge, lt, gt, in, isnull, isnotnull | |
- * | DateTime        | eq, ne, le, ge, lt, gt, in, isnull, isnotnull | |
- * | Email           | eq, ne, le, ge, lt, gt, in, contains, startwith, endwith, isnull, isnotnull | |
- * | Formula         | isnull, isnotnull |  |
- * | ID              | eq, ne, in, isnull, isnotnull | |
- * | Lookup          | eq, ne, in, isnull, isnotnull | |
- * | MasterDetail    | eq, ne, in, isnull, isnotnull | |
- * | Name            | eq, ne, le, ge, lt, gt, in, contains, startwith, endwith, isnull, isnotnull | |
- * | Hierarchy       | eq, ne, in, isnull, isnotnull | |
- * | Number          | eq, ne, le, ge, lt, gt, in, isnull, isnotnull | |
- * | Percent         | eq, ne, le, ge, lt, gt, in, isnull, isnotnull | |
- * | Phone           | eq, ne, le, ge, lt, gt, in, contains, startwith, endwith, isnull, isnotnull | |
- * | SingleSelect    | eq, ne, isnull, isnotnull |  |
- * | MultiSelect     | eq, ne, includes, excludes, isnull, isnotnull | |
- * | RollupSummary   | sum, min, max, count, isnull, isnotnull | |
- * | Text            | eq, ne, le, ge, lt, gt, contains, startwith, endwith, isnull, isnotnull | |
- * | TextArea        | isnull, isnotnull |  |
- * | URL             | eq, ne, le, ge, lt, gt, in, contains, startwith, endwith, isnull, isnotnull | |
- * | PostalCode      | eq, ne, le, ge, lt, gt, in, contains, startwith, endwith, isnull, isnotnull | |
- *
+* ## 对象查询的条件支持的操作符
+*
+* ### 操作符列表
+*
+* | datatype |  support operator |  comment |
+* | ------- | --------------- | --------- |
+* | AutoNumber      | eq, ne, le, ge, lt, gt, in, contains, startwith, endwith, isnull, isnotnull | |
+* | CheckBox        | eq, ne, isnull, isnotnull | |
+* | Currency        | eq, ne, le, ge, lt, gt, in, isnull, isnotnull | |
+* | Date            | eq, ne, le, ge, lt, gt, in, isnull, isnotnull | |
+* | DateTime        | eq, ne, le, ge, lt, gt, in, isnull, isnotnull | |
+* | Email           | eq, ne, le, ge, lt, gt, in, contains, startwith, endwith, isnull, isnotnull | |
+* | Formula         | isnull, isnotnull |  |
+* | ID              | eq, ne, in, isnull, isnotnull | |
+* | Lookup          | eq, ne, in, isnull, isnotnull | |
+* | MasterDetail    | eq, ne, in, isnull, isnotnull | |
+* | Name            | eq, ne, le, ge, lt, gt, in, contains, startwith, endwith, isnull, isnotnull | |
+* | Hierarchy       | eq, ne, in, isnull, isnotnull | |
+* | Number          | eq, ne, le, ge, lt, gt, in, isnull, isnotnull | |
+* | Percent         | eq, ne, le, ge, lt, gt, in, isnull, isnotnull | |
+* | Phone           | eq, ne, le, ge, lt, gt, in, contains, startwith, endwith, isnull, isnotnull | |
+* | SingleSelect    | eq, ne, isnull, isnotnull |  |
+* | MultiSelect     | eq, ne, includes, excludes, isnull, isnotnull | |
+* | RollupSummary   | sum, min, max, count, isnull, isnotnull | |
+* | Text            | eq, ne, le, ge, lt, gt, contains, startwith, endwith, isnull, isnotnull | |
+* | TextArea        | isnull, isnotnull |  |
+* | URL             | eq, ne, le, ge, lt, gt, in, contains, startwith, endwith, isnull, isnotnull | |
+* | PostalCode      | eq, ne, le, ge, lt, gt, in, contains, startwith, endwith, isnull, isnotnull | |
+*
 
- * - in
- *
- * in操作符需要传入数组形式的值：
- *
- * ```json
- * {
- *    "value": ["hello", "hi"]
- * }
- * ```
- */
+* - in
+*
+* in操作符需要传入数组形式的值：
+*
+* ```json
+* {
+*    "value": ["hello", "hi"]
+* }
+* ```
+*/
   export declare enum Operator {
     eq = 'eq',
     ne = 'ne',
@@ -3094,7 +3268,6 @@ declare module 'db' {
     field: string
     /**
      * 操作符，如："eq", "in"
-     *
      */
     operator: Operator | string
     /**
@@ -3443,7 +3616,7 @@ declare module 'db' {
      * };
      * let num = s.updateByCondition(cond, record);
      *
-     *```
+     * ```
      */
     updateByCondition(condition: Condition, record: Record, flag?: Flag): number
     /**
@@ -3470,7 +3643,7 @@ declare module 'db' {
      *     ]
      * }
      * let num = s.deleteByCondition(cond);
-     *```
+     * ```
      */
     deleteByCondition(condition: Condition, flag?: Flag): number
     /**
@@ -3479,7 +3652,7 @@ declare module 'db' {
      * limit最大值可设置为10000条，意味着该查询接口最多只能返回查询结果集的前10000条。
      *
      * @param condition 匹配条件
-     * @param 查询选项
+     * @param option 查询选项
      * @param relation 父子对象关系
      * @return 满足条件的记录集
      *
@@ -3502,7 +3675,7 @@ declare module 'db' {
      * }
      *
      * let records = s.queryByCondition(cond);
-     *```
+     * ```
      */
     queryByCondition(condition: Condition, option?: Option, relation?: Relation): Record[]
     /**
@@ -3528,7 +3701,7 @@ declare module 'db' {
      *     ]
      * }
      * let num = s.count(cond);
-     *```
+     * ```
      */
     count(condition?: Condition): number
   }
@@ -3540,7 +3713,6 @@ declare module 'db' {
    * @param name 对象名，可以指定自定义对象，标准对象。
    * @param dynamic 被标识已经废弃使用，请使用`db.dynamicObject`接口。
    * @return 对象封装器
-   *
    *
    * @example
    * ```ts
@@ -3563,7 +3735,6 @@ declare module 'db' {
    *
    * @param name 对象名，可以指定自定义对象，标准对象。
    * @return 对象封装器
-   *
    *
    * @example
    * ```ts
@@ -3658,12 +3829,10 @@ declare module 'db' {
      */
     exec(stmt: string, options?: SqlOptions): Record[]
     /**
-     *
      * 执行sql语句, 使用'limit offset, count'语句来进行查询分页,
      * 支持限制查询返回的记录条数，通过offset值指定从第多少条开始，count指定总共返回多少条记录。
      * 在不指定offset, count情况，默认值为offset=0, count=5000，意味着查询返回结果集的前5000条。
      * count最大值可设置为10000条，意味着该查询接口最多只能返回查询结果集的前10000条。
-     *
      *
      * @param stmt sql
      * @param options sql执行选项
@@ -3715,9 +3884,8 @@ declare module 'db' {
     /**
      * 按照根对象id查询聚合对象
      *
-     *
      * @param id 根对象记录id
-     * @param options 根对象查询选项
+     * @param option 根对象查询选项
      * @return 记录集
      *
      * @example
@@ -3841,7 +4009,7 @@ declare module 'db' {
     /**
      * 批量更新记录
      *
-     * @param 记录集
+     * @param records 记录集
      * @returns 更新的记录id集
      */
     batchUpdate(records: Record[]): string[]
@@ -3851,13 +4019,13 @@ declare module 'db' {
      * @param record 需要更新的内容
      * @param condition 匹配条件
      */
-    updateByCondition(record: Record, condition?: Condition): any
+    updateByCondition(record: Record, condition?: Condition): number
     /**
      * 按照条件删除记录, 最多只能删除5000条记录
      *
      * @param condition 匹配条件
      */
-    deleteByCondition(condition?: Condition): any
+    deleteByCondition(condition?: Condition): number
     /**
      * 支持限制查询返回的记录条数，通过skip值指定从第多少条开始，limit指定总共返回多少条记录。
      * 在不指定skip, limit情况，默认值为skip=0, limit=5000，意味着查询返回结果集的前5000条。
@@ -3892,7 +4060,7 @@ declare module 'db' {
      *     ]
      * }
      * let num = s.count(cond);
-     *```
+     * ```
      */
     count(condition?: Condition): number
   }
@@ -3908,9 +4076,8 @@ declare module 'db' {
    * `setup.updateByCondition`与`setup.deleteByCondition`的实现方式是：
    * 先调用`object.queryByCondition`从数据库查询出所有的满足条件的`id`, 然后依据`id`一个一个的去delete, update。
    *
-   * @param name 对象名，可以指定系统对象。
+   * @param objectName 对象名，可以指定系统对象。
    * @return 对象封装器
-   *
    *
    * @example
    * ```ts
@@ -3948,7 +4115,7 @@ declare module 'db' {
    * transaction(op);
    *
    * ```
-   * @param 数据库操作函数
+   * @param operation 数据库操作函数
    */
   export declare function transaction(operation: Operation): void
   /**
@@ -3988,6 +4155,10 @@ declare module 'meta' {
    * Metadata interface
    */
   export interface Meta {
+    /**
+     * 获取对象的定义信息
+     */
+    getObjectDef(): ObjectDef
     /**
      * 获取对象的字段列表
      *
@@ -4179,6 +4350,104 @@ declare module 'meta' {
    */
   export declare function object(name: string, dynamic?: boolean): Meta
   /**
+   * ObjectDef 对象元数据定义
+   */
+  export interface ObjectDef {
+    /**
+     * 对象ID
+     */
+    id: string
+    /**
+     * Key前缀
+     */
+    keyPrefix: string
+    /**
+     * 对象名
+     */
+    name: string
+    /**
+     * 对象类型
+     */
+    category: string
+    /**
+     * 对象标签
+     */
+    label: string
+    /**
+     * 对象版本
+     */
+    version: number
+    /**
+     * 是否允许爆表
+     */
+    allowReports: boolean
+    /**
+     * 是否允许流媒体API接入
+     */
+    allowStreamingAPIAccess: boolean
+    /**
+     * 是否允许批量接入
+     */
+    allowBulkAPIAccess: boolean
+    /**
+     * 是否可检索
+     */
+    allowSearch: boolean
+    /**
+     * 是否可分享
+     */
+    allowSharing: boolean
+    /**
+     * 对象状态
+     * 分为：complete、pending、dropping
+     */
+    status: string
+    /**
+     * 创建者 ID
+     */
+    createdBy: string
+    /**
+     * 创建者名称
+     */
+    createdByName: string
+    /**
+     * 创建日期
+     */
+    createdDate: string
+    /**
+     * 最后修改者 ID
+     */
+    lastModifiedBy: string
+    /**
+     * 最后修改者名称
+     */
+    lastModifiedByName: string
+    /**
+     * 最后修改日期
+     */
+    lastModifiedDate: string
+    /**
+     * 对象描述信息
+     */
+    desc: string
+    /**
+     * 安装包
+     */
+    installedPackage: string
+    /**
+     * 是否公开
+     */
+    isPublic: boolean
+    /**
+     * 对象归属
+     */
+    belongTo: string
+    /**
+     * 是否支持OLAP
+     */
+    isOlap: boolean
+  }
+  /**
    * FieldDef 字段元数据定义
    */
   export interface FieldDef {
@@ -4314,6 +4583,10 @@ declare module 'meta' {
      * 是否可搜索
      */
     isSearchable: boolean
+    /**
+     * 拓展属性
+     */
+    extraSourceAttribute: string
   }
   /**
    * 字段关联关系定义
@@ -4542,12 +4815,6 @@ declare module 'date' {
   /**
    * 将Date类型格式为字符串.
    *
-   * 如果没指定时区值, 则按照如下原则获取时区信息：
-   *
-   * - 用户http 请求触发的脚本中，使用用户时区.
-   * - 定时任务触发的脚本中，使用租户时区.
-   * - 事件触发的脚本中，使用UTC时区
-   *
    * @example
    *
    * ```ts
@@ -4593,30 +4860,27 @@ declare module 'date' {
    */
   export declare function toDate(date: string, layout: string, timezone?: TimeZones): Date
   /**
- * 按照指定是格式化字符串，把日期字符串解析为Date类型变量。
- *
- * 按照如下原则获取时区信息：
- *
- * - 用户http 请求触发的脚本中，使用用户时区.
- * - 定时任务触发的脚本中，使用租户时区.
- * - 事件触发的脚本中，使用UTC时区
- *
- * @example
- * ```ts
- *
- * import { parse } from 'date';
- *
- * let date = parse('2018-08-08 20:08:08');
- * ```
- * @param date 时间字符串
- * @return Date类型值
-
- */
+   * 按照指定是格式化字符串，把日期字符串解析为Date类型变量。
+   *
+   * 按照如下原则获取时区信息：
+   *
+   * - 用户http 请求触发的脚本中，使用用户时区.
+   * - 定时任务触发的脚本中，使用租户时区.
+   * - 事件触发的脚本中，使用UTC时区
+   *
+   * @example
+   * ```ts
+   *
+   * import { parse } from 'date';
+   *
+   * let date = parse('2018-08-08 20:08:08');
+   * ```
+   * @param date 时间字符串
+   * @return Date类型值
+   */
   export declare function parse(dateStr: string): Date
   /**
-   *
    * 获取当前时间，时区处理原则同`parse`函数。
-   *
    *
    * @example
    * ```ts
@@ -4820,76 +5084,7 @@ declare module 'permission' {
    *
    *
    */
-  export declare type PermValueType =
-    | 'CustomizeApplication'
-    | 'ViewAllUsers'
-    | 'ManageUsers'
-    | 'ViewRoles'
-    | 'ManageRoles'
-    | 'ViewProfiles'
-    | 'ViewPermissionSets'
-    | 'ManagePermissionSets'
-    | 'AssignPermissionSets'
-    | 'ViewGroups'
-    | 'ManageGroups'
-    | 'ViewQueues'
-    | 'ManageQueues'
-    | 'ManageSharing'
-    | 'ManageSystemConfig'
-    | 'ViewProcesses'
-    | 'ManageProcesses'
-    | 'RunProcesses'
-    | 'ViewFlows'
-    | 'ManageFlows'
-    | 'RunFlows'
-    | 'ViewScripts'
-    | 'ManageScripts'
-    | 'RunScripts'
-    | 'ViewTimedTasks'
-    | 'ManageTimedTasks'
-    | 'ViewReports'
-    | 'ManageReports'
-    | 'RunReports'
-    | 'ExportReports'
-    | 'ViewDashboards'
-    | 'ManageDashboards'
-    | 'RunDashboards'
-    | 'ViewAllData'
-    | 'ModifyAllData'
-    | 'RunSQL'
-    | 'ManageWebsite'
-    | 'ManagePackage'
-    | 'ManageDevelopBranch'
-    | 'UseDevelopBranch'
-    | 'ManageFeatureBranch'
-    | 'UseFeatureBranch'
-    | 'ManageFixBugBranch'
-    | 'UseFixBugBranch'
-    | 'ManageBaseline'
-    | 'ViewEncryptedData'
-    | 'ViewETLEngine'
-    | 'ViewPortalUserPermissions'
-    | 'ManagePortalUserPermissions'
-    | 'ViewServicePermissions'
-    | 'ManageServicePermissions'
-    | 'ManageScene'
-    | 'ManageEventStreaming'
-    | 'ViewNativeBO'
-    | 'ManageNativeBO'
-    | 'AssetBaseQuery'
-    | 'AssetListQuery'
-    | 'AssetAdmin'
-    | 'AppPackage'
-    | 'AppInstall'
-    | 'AppAdmin'
-    | 'AppDev'
-    | 'DataVAdmin'
-    | 'DataVDev'
-    | 'BaAdmin'
-    | 'BaDev'
-    | 'ManageDevCloud'
-    | 'ViewTenantTraceLog'
-    | 'ViewPrivateData'
+  export declare type PermValueType = 'CustomizeApplication' | 'ViewAllUsers' | 'ManageUsers' | 'ViewRoles' | 'ManageRoles' | 'ViewProfiles' | 'ViewPermissionSets' | 'ManagePermissionSets' | 'AssignPermissionSets' | 'ViewGroups' | 'ManageGroups' | 'ViewQueues' | 'ManageQueues' | 'ManageSharing' | 'ManageSystemConfig' | 'ViewProcesses' | 'ManageProcesses' | 'RunProcesses' | 'ViewFlows' | 'ManageFlows' | 'RunFlows' | 'ViewScripts' | 'ManageScripts' | 'RunScripts' | 'ViewTimedTasks' | 'ManageTimedTasks' | 'ViewReports' | 'ManageReports' | 'RunReports' | 'ExportReports' | 'ViewDashboards' | 'ManageDashboards' | 'RunDashboards' | 'ViewAllData' | 'ModifyAllData' | 'RunSQL' | 'ManageWebsite' | 'ManagePackage' | 'ManageDevelopBranch' | 'UseDevelopBranch' | 'ManageFeatureBranch' | 'UseFeatureBranch' | 'ManageFixBugBranch' | 'UseFixBugBranch' | 'ManageBaseline' | 'ViewEncryptedData' | 'ViewETLEngine' | 'ViewPortalUserPermissions' | 'ManagePortalUserPermissions' | 'ViewServicePermissions' | 'ManageServicePermissions' | 'ManageScene' | 'ManageEventStreaming' | 'ViewNativeBO' | 'ManageNativeBO' | 'AssetBaseQuery' | 'AssetListQuery' | 'AssetAdmin' | 'AppPackage' | 'AppInstall' | 'AppAdmin' | 'AppDev' | 'DataVAdmin' | 'DataVDev' | 'BaAdmin' | 'BaDev' | 'ManageDevCloud' | 'ViewTenantTraceLog' | 'ViewPrivateData'
   /**
    * permission map
    */
@@ -4938,7 +5133,7 @@ declare module 'permission' {
      *
      * let src = "src_profile_id"
      * let newName = "cloned_name"
-     * let mng = ps.newProfileManager();
+     * let mng = permission.newProfileManager();
      * mng.partialClone(src, newName, permission.ClonePartType.App, permission.ClonePartType.Menu, permission.ClonePartType.ServicePermission, permission.ClonePartType.SysParameter);
      * ```
      *
@@ -4968,6 +5163,38 @@ declare module 'permission' {
      * @param name
      */
     inheritClone(srcProfileId: string, name: string): string
+    /**
+     * 部分继承克隆权限。新的权限仅克隆基本权限与业务权限，克隆后可独立修改。可选部分权限仅克隆而不继承，可独立修改。
+     *
+     * 其他权限项均与父权限保持继承关系，不允许修改。
+     *
+     * 使用独立的事务，不与调用脚本共用一个事务，执行成功后即持久化到数据库中
+     *
+     * @example
+     * ```ts
+     * import * as ps from 'permission';
+     *
+     * let src = "src_profile_id"
+     * let newName = "profile_name"
+     * let mng = ps.newProfileManager();
+     * let newId = mng.partialInheritClone(src, newName, ps.ClonePartType.App, ps.ClonePartType.Menu);
+     * ```
+     *
+     * @param srcProfileId
+     * @param name
+     * @param parts 仅克隆而不继承的权限。目前仅支持输入ps.ClonePartType.App和ps.ClonePartType.Menu。
+     * @return 新权限配置的ID
+     */
+    partialInheritClone(srcProfileId: string, name: string, ...parts: ClonePartType[]): string
+    /**
+     * 重新设置继承克隆的子权限的部分继承设置
+     *
+     * 使用独立的事务，不与调用脚本共用一个事务，执行成功后即持久化到数据库中
+     *
+     * @param profileID
+     * @param parts 仅克隆而不继承的权限。目前仅支持输入ps.ClonePartType.App和ps.ClonePartType.Menu。
+     */
+    setInheritProfilePartial(profileID: string, ...parts: ClonePartType[]): any
     /**
      * get all profiles
      */
@@ -5020,6 +5247,61 @@ declare module 'permission' {
      * @param values
      */
     updateProfileByName(name: string, values: PermissionValue): void
+    /**
+     * 根据ID获取权限配置的应用程序设置
+     *
+     * @param profileId
+     * @return 应用程序配置的列表
+     */
+    getAppProfilesById(profileId: string): AppProfile[]
+    /**
+     * 根据ProfileID更新指定权限配置的应用程序设置
+     *
+     * @example
+     * ```ts
+     * import * as permission from 'permission';
+     *
+     * let mng = permission.newProfileManager();
+     * mng.updateAppProfilesById(id, [{ applicationID: "app_ID", visible: true, default: true }])
+     * ```
+     *
+     * @param profileID Profile ID
+     * @param appProfiles 需要更新的AppProfile配置信息，未指定的AppProfile不会修改。
+     */
+    updateAppProfilesById(profileID: string, appProfiles: AppProfile[]): void
+    /**
+     * 根据权限配置ID和应用程序ID获取菜单设置
+     *
+     * @example
+     * ```typescript
+     * import * as permission from 'permission';
+     *
+     * let mng = permission.newProfileManager();
+     * let appMenuList = mgr.getAppMenuProfilesById("profileID", "appID")
+     * console.log(appMenuList)
+     * ```
+     *
+     * @param profileID 权限配置ID
+     * @param appID 应用程序ID
+     * @return 应用菜单配置的列表
+     */
+    getAppMenuProfilesById(profileID: string, appID: string): AppMenuProfile[]
+    /**
+     * 更新应用的菜单配置
+     *
+     * @example
+     * ```typescript
+     * import * as permission from 'permission';
+     *
+     * let mng = permission.newProfileManager();
+     * mng.updateAppMenuProfilesById( profileID, appID, [{menu: 'menuID1', default: true, visible: true},{menu: 'menuID2', default: false, visible: false}])
+     * ```
+     *
+     * @param profileID
+     * @param appID
+     * @param menuProfiles
+     */
+    updateAppMenuProfilesById(profileID: string, appID: string, menuProfiles: AppMenuProfile[]): any
     /**
      * delete profile by id, if profile does not exist, throw error
      *
@@ -5233,6 +5515,19 @@ declare module 'permission' {
    *```
    */
   export declare function newPermissionManager(): PermissionManager
+  export interface AppProfile {
+    applicationID: string
+    name?: string
+    label?: string
+    visible: boolean
+    default: boolean
+  }
+  export interface AppMenuProfile {
+    menu: string
+    label?: string
+    visible: boolean
+    default: boolean
+  }
 }
 
 declare module 'user' {
@@ -6239,6 +6534,17 @@ declare module 'redis' {
      */
     zrem(key: string, ...members: string[]): number
     /**
+     * 移除有序集 key 中，指定排名(rank)区间内的所有成员。
+     * 区间分别以下标参数 start 和 stop 指出，包含 start 和 stop 在内。
+     *
+     * 返回被移除成员的数量。
+     *
+     * @param key 键值
+     * @param start 其实位置
+     * @param stop 结束位置
+     */
+    zremrangebyrank(key: string, start: string, stop: string): number
+    /**
      * 移除有序集 key 中，所有 score 值介于 min 和 max 之间(包括等于 min 或 max )的成员。
      *
      * 返回被移除成员的数量
@@ -6762,14 +7068,7 @@ declare module 'redis' {
    *
    * 如 string 类型的入参可以接受 number 类型的实参， 但该行为是不可靠的，请按照方法签名指定的类型来传参。
    */
-  export interface RedisClient
-    extends StringClient,
-      ListClient,
-      SetClient,
-      HashClient,
-      SortedSet,
-      ExpirationClient,
-      DatabaseClient {}
+  export interface RedisClient extends StringClient, ListClient, SetClient, HashClient, SortedSet, ExpirationClient, DatabaseClient {}
   /**
    * 创建一个 redis client 实例
    *
@@ -6959,37 +7258,37 @@ declare module 'objectstorage' {
     async?: boolean
   }
   /**
- * Store client api
- *
- * @example
- * ```ts
- * // 脚本库打包依赖规范：
- * // import * as objectstorage from 'objectstorage' 导入模块不能修改为其他的别名，必须和模块名一致；
- * // newClient方法里参数不能为变量，否则打包解析不到连接器依赖
- * import * as objectstorage from 'objectstorage';
- * import * as buffer from 'buffer';
- *
- * let minioCli = objectstorage.newClient(objectstorage.StoreType.MINIO, "minio1", "mybucket");
- * console.log(minioCli.putObject("minio.text", "老的"));
- * let data = minioCli.getObject("minio.text");
- * let buf = buffer.fromBytes(data);
- * console.log(buf.toString());
- * console.log(minioCli.getEndpoint());
- *
- * let oldCli = objectstorage.newClient(objectstorage.StoreType.PROXY, "NS__testbucket");
- * console.log(oldCli.putObject("a.txt", "选择默认的桶"));
- * data = oldCli.getObject("a.txt");
- * buf = buffer.fromBytes(data);
- * console.log(buf.toString());
- * console.log(oldCli.getEndpoint());
- *
- * let newCli = objectstorage.newClient(objectstorage.StoreType.PROXY, "NS__testbucket", "cbucket");
- * console.log(newCli.putObject("a.txt", "不是选择默认的桶"));
- * data = newCli.getObject("a.txt");
- * buf = buffer.fromBytes(data);
- * console.log(buf.toString());
- ```
- */
+* Store client api
+*
+* @example
+* ```ts
+* // 脚本库打包依赖规范：
+* // import * as objectstorage from 'objectstorage' 导入模块不能修改为其他的别名，必须和模块名一致；
+* // newClient方法里参数不能为变量，否则打包解析不到连接器依赖
+* import * as objectstorage from 'objectstorage';
+* import * as buffer from 'buffer';
+*
+* let minioCli = objectstorage.newClient(objectstorage.StoreType.MINIO, "minio1", "mybucket");
+* console.log(minioCli.putObject("minio.text", "老的"));
+* let data = minioCli.getObject("minio.text");
+* let buf = buffer.fromBytes(data);
+* console.log(buf.toString());
+* console.log(minioCli.getEndpoint());
+*
+* let oldCli = objectstorage.newClient(objectstorage.StoreType.PROXY, "NS__testbucket");
+* console.log(oldCli.putObject("a.txt", "选择默认的桶"));
+* data = oldCli.getObject("a.txt");
+* buf = buffer.fromBytes(data);
+* console.log(buf.toString());
+* console.log(oldCli.getEndpoint());
+*
+* let newCli = objectstorage.newClient(objectstorage.StoreType.PROXY, "NS__testbucket", "cbucket");
+* console.log(newCli.putObject("a.txt", "不是选择默认的桶"));
+* data = newCli.getObject("a.txt");
+* buf = buffer.fromBytes(data);
+* console.log(buf.toString());
+```
+*/
   export interface Client {
     /**
      * 是否存在对象
@@ -8139,43 +8438,43 @@ declare module 'bp' {
   import * as db from 'db'
   export interface BPClient {
     /**
-     * start executing a BP
-     * @example
-     * ```ts
-     * import * as bp from 'bp'
-     * let client = bp.newClientV1()
-     * let res = client.start("test", {  "foo": 1,  "bar": 3}, "1.0.1")
-     * ```
-     * @param name the name of the bp
-     * @input input the parameters of bp
-     * @param version the version of bp, optional
-     * @return result. For example,
-     * ```json
-     *  {
-           "interviewId": "002N000000FdtN6xwgjI",
-           "screen": {
-           "allowBack": false,
-           "allowFinish": true,
-           "allowNext": true,
-           "allowPause": false,
-           "helpText": "",
-           "label": "input phone number",
-           "name": "inputphonenumber",
-           "pausedText": "",
-           "screenFields": [
-             {
-               "dataType": "text",
-               "defaultValue": "135xxxxxxxx",
-               "fieldType": "InputField",
-               "helpText": "",
-               "isRequired": false,
-               "label": "phone number",
-               "name": "phoneNumber"
-             }
-            ]
-        }
-     * ```
-     */
+   * start executing a BP
+   * @example
+   * ```ts
+   * import * as bp from 'bp'
+   * let client = bp.newClientV1()
+   * let res = client.start("test", {  "foo": 1,  "bar": 3}, "1.0.1")
+   * ```
+   * @param name the name of the bp
+   * @input input the parameters of bp
+   * @param version the version of bp, optional
+   * @return result. For example,
+   * ```json
+   *  {
+         "interviewId": "002N000000FdtN6xwgjI",
+         "screen": {
+         "allowBack": false,
+         "allowFinish": true,
+         "allowNext": true,
+         "allowPause": false,
+         "helpText": "",
+         "label": "input phone number",
+         "name": "inputphonenumber",
+         "pausedText": "",
+         "screenFields": [
+           {
+             "dataType": "text",
+             "defaultValue": "135xxxxxxxx",
+             "fieldType": "InputField",
+             "helpText": "",
+             "isRequired": false,
+             "label": "phone number",
+             "name": "phoneNumber"
+           }
+          ]
+      }
+   * ```
+   */
     start(name: string, input: Dict, version?: string): Dict
     /**
      * add history record of BP to db
@@ -8872,13 +9171,7 @@ declare module 'bp' {
      *
      *  @return 多条关于指定BPM实例的历史记录
      */
-    queryHistory(
-      instanceId: string,
-      category?: string,
-      options?: db.OptionItem,
-      sources?: string[],
-      kinds?: string[],
-    ): Dict[]
+    queryHistory(instanceId: string, category?: string, options?: db.OptionItem, sources?: string[], kinds?: string[]): Dict[]
     /**
      * 为运行BPM实例添加文件附件
      *
@@ -9013,6 +9306,33 @@ declare module 'bp' {
      * @param options 可选参数，可部分留空或全部留空
      */
     queryTasks(instanceId: string, states?: string[], options?: db.OptionItem): Dict[]
+    /**
+     * 获取可跳转的元素列表。
+     *
+     * 目前仅支持以下节点的跳转：
+     *
+     * 1. 无法跨子流程回退 即无法回退到流程外的节点，无法回退第一个节点。具体来说，分为 3 个子场景限制：
+     *    1. 并行网关场（AppCube BPM 中每个并行分支为一个子流程）
+     *       1. 第一个节点无法回退，即无法回退并行任务；
+     *       2. 并行网关内的节点无法回退到并行网关外；
+     *       3. 并行网关外的节点无法跳转到并行网关内；
+     *    2. 内嵌子流程场景：不能跳转到外部节点，外部节点无法跳转到内部；
+     *    3. 调用活动场景：不能跳转到调用活动外的流程，外部节点无法跳转到内部。
+     * 2. 只能跳转到人工节点。
+     *
+     * 确定流程实例的方法主要通过任务的 parentId 确定。对于会签来说，需要获取个人任务的父任务（会签任务）的 parentId 才能确定。
+     *
+     * @param instanceId BPM实例ID
+     */
+    getJumpableElements(instanceId: string): Set<string>
+    /**
+     * 关闭当前任务并跳转到指定名称的任务。
+     *
+     * @see getJumpableElements 获取可跳转节点列表
+     * @param instanceId BPM实例ID
+     * @param name 用户任务的名称
+     */
+    jumpToElement(instanceId: string, name: string): any
   }
   /**
    * Create a BPM V2 client for managing BPM instances.
@@ -9296,6 +9616,29 @@ declare module 'bp' {
      * @return 任务状态信息
      */
     complete(taskInsId: string, outcome: string, inputs: Dict): Dict
+    /**
+     * 结束任务，并指定下一个任务的参与者（必须在下一个任务的参与者列表中，或具有管理权限）。
+     *
+     * @example
+     * ```ts
+     *
+     * import * as bp from 'bp'
+     * let taskClient = bp.newTaskClient()
+     * let res = taskClient.completeWithAssignee(
+     *      "002N000000VBk5qqWi1I",
+     *      "user",
+     *      "",
+     *      {}
+     * )
+     * console.log(res)
+     * ```
+     *
+     * @param taskInsId 任务实例ID
+     * @param outcome 可以指定任务结果状态，如果为空字符串，任务状态将默认置为"complete"
+     * @param inputs 可以设置BPM任务的变量，如果为空Map{}则不修改变量值
+     * @return 任务状态信息
+     */
+    completeWithAssignee(taskInsId: string, assignee: string, outcome: string, inputs: Dict): Dict
     /**
      * 删除任务
      * @example
@@ -10025,6 +10368,644 @@ declare module 'portaluser' {
   export declare function newManager(): Manager
 }
 
+declare module 'publicgroup' {
+  /**
+   * 创建公共组管理实例
+   *
+   * @return 管理实例
+   */
+  export declare function newManager(): Manager
+  /**
+   * 公共组管理对象
+   *
+   * 公共组的增删改查
+   */
+  export interface Manager {
+    /**
+     * 获取公共组列表
+     *
+     * @param qo 查询参数
+     * @return 公共组列表（不包含成员信息）
+     */
+    getList(qo?: QueryOption): PublicGroup[]
+    /**
+     * 获取公共组对象
+     * @param id 公共组ID
+     */
+    getByID(id: string): PublicGroup
+    /**
+     * 获取公共组对象
+     * @param name 公共组名
+     */
+    getByName(name: string): PublicGroup
+    /**
+     * 创建公共组
+     *
+     * @example
+     * ```ts
+     *
+     * import * as pg from "publicgroup"
+     *
+     * let mgr = pg.newManager()
+     * let id = mgr.create({ name: "kwtest",
+     *                       label: "kwtest",
+     *                       memberMap: { user: ["10gd000000En2xfeFqQy"] } })
+     * let publicGroup = mgr.getByID(id)
+     * ```
+     *
+     * @param ps 公共组参数，必选参数name，label，memberMap，且memberMap至少包含一个成员。
+     * @return 公共组ID
+     */
+    create(ps: PublicGroupOpts): string
+    /**
+     * 删除公共组
+     *
+     * @param id 公共组ID
+     */
+    remove(id: string): void
+    /**
+     * 获取成员用户
+     *
+     * @param pgID 公共组ID
+     * @param qo 查询参数
+     */
+    getUsersByID(pgID: string, qo?: QueryOption): string[]
+    /**
+     * 获取成员业务用户
+     *
+     * @param pgID 公共组ID
+     * @param qo 查询参数
+     */
+    getPortalUsersByID(pgID: string, qo?: QueryOption): string[]
+    /**
+     * 获取成员角色
+     *
+     * @param pgID 公共组ID
+     * @param qo 查询参数
+     */
+    getRolesByID(pgID: string, qo?: QueryOption): string[]
+    /**
+     * 获取成员角色及下属
+     *
+     * @param pgID 公共组ID
+     * @param qo 查询参数
+     */
+    getRolesAndSubsByID(pgID: string, qo?: QueryOption): string[]
+    /**
+     * 获取成员公共组
+     *
+     * @param pgID 公共组ID
+     * @param qo 查询参数
+     */
+    getPublicGroupsByID(pgID: string, qo?: QueryOption): string[]
+    /**
+     * 添加用户
+     *
+     * @param pgID
+     * @param userIDs
+     */
+    addUsersByID(pgID: string, userIDs: string[]): void
+    /**
+     * 添加业务用户
+     *
+     * @param pgID
+     * @param portalUserIDs
+     */
+    addPortalUsersByID(pgID: string, portalUserIDs: string[]): void
+    /**
+     * 添加角色
+     *
+     * @param pgID
+     * @param RoleIDs
+     */
+    addRolesByID(pgID: string, RoleIDs: string[]): void
+    /**
+     * 添加角色及下属
+     *
+     * @param pgID
+     * @param RoleIDs
+     */
+    addRolesAndSubsByID(pgID: string, RoleIDs: string[]): void
+    /**
+     * 添加公共组
+     *
+     * @param pgID
+     * @param groupIDs
+     */
+    addPublicGroupsByID(pgID: string, groupIDs: string[]): void
+    /**
+     * 移除成员用户
+     *
+     * @param pgID
+     * @param userIDs
+     */
+    removeUsersByID(pgID: string, userIDs: string[]): void
+    /**
+     * 移除成员业务用户
+     *
+     * @param pgID
+     * @param portalUserIDs
+     */
+    removePortalUsersByID(pgID: string, portalUserIDs: string[]): void
+    /**
+     * 移除成员角色
+     *
+     * @param pgID
+     * @param RoleIDs
+     */
+    removeRolesByID(pgID: string, RoleIDs: string[]): void
+    /**
+     * 移除成员角色及下属
+     *
+     * @param pgID
+     * @param RoleIDs
+     */
+    removeRolesAndSubsByID(pgID: string, RoleIDs: string[]): void
+    /**
+     * 移除成员公共组
+     *
+     * @param pgID
+     * @param groupIDs
+     */
+    removePublicGroupsByID(pgID: string, groupIDs: string[]): void
+  }
+  /**
+   * 公共组的创建参数
+   */
+  export interface PublicGroupOpts {
+    /**
+     * 名称
+     */
+    name: string
+    /**
+     * 标签
+     */
+    label: string
+    /**
+     * 是否使用层级结构授予访问权限
+     */
+    usingHierarchies?: boolean
+    /**
+     * 成员Map
+     */
+    memberMap?: {
+      user?: string[]
+      role?: string[]
+      roleAndSubordinates?: string[]
+      group?: string[]
+      puser?: string[]
+    }
+  }
+  /**
+   * 查询参数
+   */
+  export interface QueryOption {
+    /**
+     * 数据页数，从第1页开始
+     */
+    page?: number
+    /**
+     * 每页的记录数
+     */
+    pagesize?: number
+  }
+  /**
+   * 公共组对象
+   *
+   */
+  export interface PublicGroup {
+    id: string
+    name: string
+    label: string
+    usingHierarchies: boolean
+    createdBy: string
+    createdByName: string
+    createdDate: string
+    lastModifiedBy: string
+    lastModifiedByName: string
+    lastModifiedDate: string
+  }
+}
+
+declare module 'role' {
+  /**
+   * 创建角色管理实例
+   *
+   * @return 管理实例
+   */
+  export declare function newManager(): Manager
+  export interface Manager {
+    /**
+     * 获取角色列表
+     *
+     * @param qo 查询参数
+     * @return 角色列表（不返回用户列表、管理者列表）
+     */
+    getList(qo?: QueryOption): Role[]
+    /**
+     * 获取角色
+     *
+     * @param id 角色ID
+     * @return 返回Role对象
+     */
+    getByID(id: string): Role
+    /**
+     * 获取角色
+     *
+     * @param name 角色名称
+     * @return 返回Role对象
+     */
+    getByName(name: string): Role
+    /**
+     * 创建角色
+     *
+     * @example
+     * ```typescript
+     * import * as r from "role"
+     * let mgr = r.newManager()
+     * let id = mgr.create({ name: "test", label: "test" })
+     * let testRole = mgr.getByID(id)
+     *
+     * @param ro 角色创建参数 - 必选字段label、name，可选字段reportTo、description。
+     * @return 角色ID
+     */
+    create(ro: RoleOptions): string
+    /**
+     * 删除角色
+     *
+     * 不能删除被 用户、其他角色、组或者分享规则 所引用的角色。
+     * @param id 角色ID
+     */
+    remove(id: string): void
+    /**
+     * 更新角色元数据
+     *
+     * 仅修改角色的元数据，不会修改用户的角色身份
+     *
+     * @param role RoleOptions接口，必须包含id。
+     */
+    update(role: Role): void
+  }
+  export interface RoleOptions {
+    /**
+     * 角色ID
+     */
+    id?: string
+    /**
+     * 名称
+     */
+    name: string
+    /**
+     * 标签
+     */
+    label: string
+    /**
+     * 直属上司的角色ID
+     */
+    reportTo?: string
+    /**
+     * 描述信息
+     */
+    description?: string
+  }
+  /**
+   * 查询参数
+   */
+  export interface QueryOption {
+    /**
+     * 数据页数，从第1页开始
+     */
+    page?: number
+    /**
+     * 每页的记录数
+     */
+    pagesize?: number
+  }
+  export declare function buildRole(
+    p:
+      | string
+      | {
+          [key: string]: any
+        },
+  ): Role
+  export interface Role {
+    readonly id: string
+    readonly name: string
+    label: string
+    reportTo: string
+    reportToName: string
+    reportToLabel: string
+    manager: string[]
+    description: string
+    readonly createdBy: string
+    readonly createdByName: string
+    readonly createdDate: string
+    readonly lastModifiedBy: string
+    readonly lastModifiedByName: string
+    readonly lastModifiedDate: string
+    /**
+     * 根据角色ID获取用户列表
+     *
+     * @param recursive 是否获取下属角色的用户，默认为false
+     * @param qo 查询参数
+     * @return 用户ID列表
+     */
+    getUsers(recursive?: boolean, qo?: QueryOption): string[]
+    /**
+     * 根据角色ID获取业务用户列表
+     *
+     * @param recursive 是否获取下属角色的用户，默认为false
+     * @param qo 查询参数
+     */
+    getPortalUsers(recursive?: boolean, qo?: QueryOption): string[]
+    /**
+     * 用户是否拥有该角色身份，或该角色的下属身份
+     *
+     * @param userID 用户ID
+     */
+    containsUser(userID: string): boolean
+    /**
+     * 业务用户是否拥有该角色身份
+     *
+     * @param userID 用户ID
+     * @param recursive 是否获取下属角色的用户，默认为false
+     */
+    containsPortalUser(userID: string, recursive?: boolean): boolean
+    /**
+     * 为用户添加角色
+     *
+     * 写入数据库
+     *
+     * @param user 用户ID
+     */
+    assignUser(user: string): void
+    /**
+     * 为业务用户添加角色
+     *
+     * 写入数据库
+     *
+     * @param puserID 用户ID
+     */
+    assignPortalUser(puserID: string): void
+    /**
+     * 将角色指派给指定的部分用户
+     *
+     * 其他用户将失去这个角色
+     *
+     * @param userIDs 用户ID
+     */
+    assignUsers(userIDs: string[]): void
+    /**
+     * 将角色指派给指定的部分业务用户
+     *
+     * 其他业务用户将失去这个角色
+     *
+     * @param puserIDs 业务用户用户ID
+     */
+    assignPortalUsers(puserIDs: string[]): void
+  }
+}
+
+declare module 'queue' {
+  /**
+   * 创建工作队列管理实例
+   * @return 管理实例
+   */
+  export declare function newManager(): Manager
+  /**
+   * 工作队列管理对象
+   *
+   * 工作队列的增删改查
+   */
+  export interface Manager {
+    /**
+     * 获取工作队列列表
+     *
+     * @param qo 查询参数
+     * @return 工作队列列表（不包含成员信息和队列对象信息）
+     */
+    getList(qo?: QueryOption): Queue[]
+    /**
+     * 获取工作队列
+     * @param id 工作队列ID
+     */
+    getByID(id: string): Queue
+    /**
+     * 获取工作队列
+     * @param name 工作队列名称
+     */
+    getByName(name: string): Queue
+    /**
+     * 创建工作队列
+     *
+     * @example
+     * ```typescript
+     * import * as queue from "queue"
+     * let mgr = queue.newManager()
+     * let id = mgr.create({ name: "test",
+     *                       label: "test",
+     *                       memberMap: { user: [{租户ID},] } })
+     * let testQueue = mgr.getByID(id)
+     * ```
+     * @param ps 工作队列创建参数。必填参数：name、label、memberMap，且memberMap至少包含一个成员。
+     * @return 角色ID
+     */
+    create(ps: QueueOpts): string
+    /**
+     * 删除工作队列
+     * @param id 工作队列ID
+     */
+    remove(id: string): void
+    /**
+     * 获取成员用户
+     *
+     * @param qID 工作队列ID
+     * @param qo 查询参数
+     */
+    getUsersByID(qID: string, qo?: QueryOption): string[]
+    /**
+     * 获取成员业务用户
+     *
+     * @param qID 工作队列ID
+     * @param qo 查询参数
+     */
+    getPortalUsersByID(qID: string, qo?: QueryOption): string[]
+    /**
+     * 获取成员角色
+     *
+     * @param qID 工作队列ID
+     * @param qo 查询参数
+     */
+    getRolesByID(qID: string, qo?: QueryOption): string[]
+    /**
+     * 获取成员角色及下属
+     *
+     * @param qID 工作队列ID
+     * @param qo 查询参数
+     */
+    getRolesAndSubsByID(qID: string, qo?: QueryOption): string[]
+    /**
+     * 获取成员公共组
+     *
+     * @param qID 工作队列ID
+     * @param qo 查询参数
+     */
+    getPublicGroupsByID(qID: string, qo?: QueryOption): string[]
+    /**
+     * 添加用户
+     *
+     * @param qID
+     * @param userIDs
+     */
+    addUsersByID(qID: string, userIDs: string[]): void
+    /**
+     * 添加业务用户
+     *
+     * @param qID
+     * @param portalUserIDs
+     */
+    addPortalUsersByID(qID: string, portalUserIDs: string[]): void
+    /**
+     * 添加角色
+     *
+     * @param qID
+     * @param RoleIDs
+     */
+    addRolesByID(qID: string, RoleIDs: string[]): void
+    /**
+     * 添加角色及下属
+     *
+     * @param qID
+     * @param RoleIDs
+     */
+    addRolesAndSubsByID(qID: string, RoleIDs: string[]): void
+    /**
+     * 添加公共组
+     *
+     * @param qID
+     * @param groupIDs
+     */
+    addPublicGroupsByID(qID: string, groupIDs: string[]): void
+    /**
+     * 移除成员用户
+     *
+     * @param qID
+     * @param userIDs
+     */
+    removeUsersByID(qID: string, userIDs: string[]): void
+    /**
+     * 移除成员业务用户
+     *
+     * @param qID
+     * @param portalUserIDs
+     */
+    removePortalUsersByID(qID: string, portalUserIDs: string[]): void
+    /**
+     * 移除成员角色
+     *
+     * @param qID
+     * @param RoleIDs
+     */
+    removeRolesByID(qID: string, RoleIDs: string[]): void
+    /**
+     * 移除成员角色及下属
+     *
+     * @param qID
+     * @param RoleIDs
+     */
+    removeRolesAndSubsByID(qID: string, RoleIDs: string[]): void
+    /**
+     * 移除成员公共组
+     *
+     * @param qID
+     * @param groupIDs
+     */
+    removePublicGroupsByID(qID: string, groupIDs: string[]): void
+  }
+  /**
+   * 工作队列的创建参数
+   */
+  export interface QueueOpts {
+    /**
+     * 名称
+     */
+    name: string
+    /**
+     * 标签
+     */
+    label: string
+    /**
+     * 公共邮箱
+     */
+    email?: string
+    /**
+     * 是否给成员发送邮件
+     */
+    sendEmail?: boolean
+    /**
+     * 邮件模板ID
+     */
+    emailTemp?: string
+    /**
+     * 管理者ID
+     */
+    manager?: string
+    /**
+     * 队列对象列表
+     */
+    objects?: string[]
+    /**
+     * 成员
+     */
+    memberMap: {
+      user?: string[]
+      role?: string[]
+      roleAndSubordinates?: string[]
+      group?: string[]
+      puser?: string[]
+    }
+  }
+  /**
+   * 查询参数
+   */
+  export interface QueryOption {
+    /**
+     * 数据页数，从第1页开始
+     */
+    page?: number
+    /**
+     * 每页的记录数
+     */
+    pagesize?: number
+  }
+  /**
+   * 工作队列对象
+   *
+   * 修改该对象后，需要通过Manager的update方法写入数据库
+   */
+  export interface Queue {
+    name: string
+    label: string
+    id: string
+    createdBy: string
+    createdByName: string
+    createdDate: string
+    lastModifiedBy: string
+    lastModifiedByName: string
+    lastModifiedDate: string
+    owner: string
+    ownerName: string
+    email: string
+    manager: string
+    managerName: string
+    emailTemplate: string
+    sendEmailToMembers: boolean
+    type: string
+    refCount: number
+    objects: string[]
+  }
+}
+
 declare module 'hms' {
   /**
    * HMS Connector client interface
@@ -10199,14 +11180,7 @@ declare module 'dcb' {
      * @param countryID country code, optional
      * @param transactionID transaction ID, optional
      */
-    sendTemplateSms(
-      msisdn: string,
-      templateID: string,
-      templateParams: Dict,
-      operatorCode: string,
-      countryID: string,
-      transactionID: string,
-    ): Dict
+    sendTemplateSms(msisdn: string, templateID: string, templateParams: Dict, operatorCode: string, countryID: string, transactionID: string): Dict
   }
   /**
    * Client api for DCB connectors.
@@ -10432,20 +11406,20 @@ declare module 'multipart' {
 
 declare module 'rand' {
   /**
- * get rand string
- * @param size the length of the random number
- *
- * @returns string of random number
- *
- * @example
- * ```ts
- *
- * import * as rand from "rand"
- *
- * let str =rand.random(5)
- * ```
+* get rand string
+* @param size the length of the random number
+*
+* @returns string of random number
+*
+* @example
+* ```ts
+*
+* import * as rand from "rand"
+*
+* let str =rand.random(5)
+* ```
 
- */
+*/
   export declare function random(size: number): string
 }
 
@@ -11020,43 +11994,43 @@ declare module 'lock' {
 declare module 'welink' {
   import TaskData = __bingo_builtin.TaskData
   /**
- * @example
- *
- * ```ts
- *
- // Here's your code.
- import * as welink from "welink";
+* @example
+*
+* ```ts
+*
+// Here's your code.
+import * as welink from "welink";
 
- const client = welink.newClient();
- //let result = client.user.queryWeLinkUserInfoByID("lisixxxx1");
+const client = welink.newClient();
+//let result = client.user.queryWeLinkUserInfoByID("lisixxxx1");
 
- //console.log(client.user.queryWeLinkUserInfoByID("lisixxxx1"));
- //let result = client.user.queryUserDomainScopes("lisixxxx1");
- // let result = client.user.queryUserDomainRoles("lisixxxx1");
- let data = {
-    "taskId": "202008fangiia3",
-    "taskTitle": "周五上午请假",
-    "userId": "xxxxxxxxxx1",
-    "userNameCn": "lisi",
-    "userNameEn": "李四",
-    "detailsUrl": "https://xxx/url1",
-    "detailsUrlPc": "https://xxx/url2",
-    "appName": "请假",
-    "applicantUserId": "xxxxxxxxxx2",
-    "applicantUserNameCn": "张三",
-    "applicantUserNameEn": "zhangsan",
-    "isMsg": 1,
-    "isShowApplicantUserName": true,
-    "applicantId": "202008fangjia1",
-    "businessCode": "202101111556shenpibianma"
+//console.log(client.user.queryWeLinkUserInfoByID("lisixxxx1"));
+//let result = client.user.queryUserDomainScopes("lisixxxx1");
+// let result = client.user.queryUserDomainRoles("lisixxxx1");
+let data = {
+  "taskId": "202008fangiia3",
+  "taskTitle": "周五上午请假",
+  "userId": "xxxxxxxxxx1",
+  "userNameCn": "lisi",
+  "userNameEn": "李四",
+  "detailsUrl": "https://xxx/url1",
+  "detailsUrlPc": "https://xxx/url2",
+  "appName": "请假",
+  "applicantUserId": "xxxxxxxxxx2",
+  "applicantUserNameCn": "张三",
+  "applicantUserNameEn": "zhangsan",
+  "isMsg": 1,
+  "isShowApplicantUserName": true,
+  "applicantId": "202008fangjia1",
+  "businessCode": "202101111556shenpibianma"
 
 }
- //let result = client.task.addTask(data);
- // let result = client.task.updateTask("202008fangiia3", "xxxxxxxxxx1", "张三", "zhangsan");
- let result = client.task.delTask("202008fangiia3");
- console.log(result)
- * ```
- */
+//let result = client.task.addTask(data);
+// let result = client.task.updateTask("202008fangiia3", "xxxxxxxxxx1", "张三", "zhangsan");
+let result = client.task.delTask("202008fangiia3");
+console.log(result)
+* ```
+*/
   export declare function newClient(): WeLinkClientImpl
   interface WeLinkTask {
     /**
@@ -11260,6 +12234,12 @@ declare module 'aienable' {
      * @return recommend result
      */
     recommend(operation: string, input: Dict): Dict
+    /**
+     * @param name connector instance name
+     * @param restaction input
+     * @return workorder result
+     */
+    workorder(operation: string, input: Dict): Dict
   }
   /**
    * Client api for AIEnable client.
@@ -11528,7 +12508,7 @@ declare module 'bpmmeta' {
 declare module 'event' {
   export interface EventMetadataClient {
     /**
-     * ǰ̨Ԫ������������
+     * 前台元数据锁定操作
      * @example
      * ```ts
      * import * as eventClient from 'event';
@@ -11540,7 +12520,7 @@ declare module 'event' {
      */
     metadataLock(metaType: string, metaID: string): void
     /**
-     * ǰ̨Ԫ���ݽ����������
+     * 前台元数据解除锁定操作
      * @example
      * ```ts
      * import * as eventClient from 'event';
@@ -11558,7 +12538,7 @@ declare module 'event' {
 declare module 'editer' {
   export interface EditerLockClient {
     /**
-     * ��ѯԪ���ݱ༭��״̬����
+     * 查询元数据编辑锁状态操作
      * @example
      * ```ts
      * import * as editerClient from 'editer';
@@ -11570,7 +12550,7 @@ declare module 'editer' {
      */
     editerLockState(editerType: string, id: string): EditerLockInfo
     /**
-     * Ԫ���ݱ༭������������
+     * 元数据编辑锁的锁定操作
      * @example
      * ```ts
      * import * as editerClient from 'editer';
@@ -11582,7 +12562,7 @@ declare module 'editer' {
      */
     editerLock(editerType: string, id: string): EditerLockInfo
     /**
-     * Ԫ���ݱ༭����ˢ�²���
+     * 元数据编辑锁的刷新操作
      * @example
      * ```ts
      * import * as editerClient from 'editer';
@@ -11594,7 +12574,7 @@ declare module 'editer' {
      */
     refreshLock(editerType: string, id: string): boolean
     /**
-     * Ԫ���ݱ༭���Ľ�������
+     * 元数据编辑锁的解锁操作
      * @example
      * ```ts
      * import * as editerClient from 'editer';
@@ -11606,7 +12586,7 @@ declare module 'editer' {
      */
     editerUnlock(editerType: string, id: string): void
     /**
-     * ��ѯ���Ԫ���ݱ༭����״̬����
+     * 查询多个元数据编辑锁的状态操作
      * @example
      * ```ts
      * import * as editerClient from 'editer';
@@ -11618,7 +12598,7 @@ declare module 'editer' {
      */
     editerLocksState(editerType: string, ids: string[]): EditerLockInfo[]
     /**
-     * Ԫ���ݱ༭����ǿ�ƽ�������
+     * 元数据编辑锁的强制解锁操作
      * @example
      * ```ts
      * import * as editerClient from 'editer';

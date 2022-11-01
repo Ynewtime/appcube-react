@@ -15,8 +15,8 @@ APPCUBE_CLIENT_SECRET=Your client secret
 APPCUBE_TENANT_ID=Your tenant id
 APPCUBE_WIDGET_ID=Your widget id
 APPCUBE_SCRIPT_NAME=Your script name, required when use `pnpm upload:script` or `pnpm ci:script`, e.g. Namespace__Script(After configure this env, also remember to create a script in scripts/appcube-scripts/Namespace__Script.ts before `pnpm upload:script` or `pnpm ci:script`)
-NO_PROXY=Bypass IPs or domains when developing with Huawei intranet, e.q.: 172.0.0.0/8,10.0.0.0/16,192.168.0.0/16,127.0.0.1,localhost,inhuawei.com,huawei.com
-HTTP_PROXY=Proxy setting for Huawei intranet, e.q.: http://{your w3 account}:{your w3 password}@proxy.huawei.com:8080
+APPCUBE_NO_PROXY=Bypass IPs or domains when developing with Huawei intranet, e.q.: 172.0.0.0/8,10.0.0.0/16,192.168.0.0/16,127.0.0.1,localhost,inhuawei.com,huawei.com
+APPCUBE_HTTP_PROXY=Proxy setting for Huawei intranet, e.q.: http://{your w3 account}:{your w3 password}@proxy.huawei.com:8080
 ```
 
 `APPCUBE_DOMAIN`, `APPCUBE_CLIENT_ID` and `APPCUBE_CLIENT_SECRET` are required.
@@ -42,9 +42,9 @@ let scenariosId = '' // e.g. 00000000000000000001
 
 (7) Deploy: `pnpm ci`
 
-(8) When developing with Huawei intranet, remember to set the `NO_PROXY` and `HTTP_PROXY` env variable.
+(8) When developing with Huawei intranet, remember to set the `APPCUBE_NO_PROXY` and `APPCUBE_HTTP_PROXY` env variable.
 
-(9) When developing with internet, **clear** the `NO_PROXY` and `HTTP_PROXY` env variable.
+(9) When developing with internet, **clear** the `APPCUBE_NO_PROXY` and `APPCUBE_HTTP_PROXY` env variable.
 
 ### Q&A
 
@@ -59,3 +59,7 @@ A: Remember to check your [VS Code proxy settings](https://code.visualstudio.com
 Q: Socket hang up error?
 
 A: Mainly because you are uploading to internet when connecting to intranet. For example when you are connecting to wlanaccess2(Huawei Intranet), and you try to use the `pnpm ci:script` or `pnpm ci` commands, you will get this `Socket hang up` error.
+
+Q: When deploy to production environment, my app cannot render.
+
+A: (1) In application studio / Page Settings / Property, do not select **Combine & Extract Resources** (2) When publish to _My Repository_, do not select **Compress Advance Page**.

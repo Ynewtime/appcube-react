@@ -8,10 +8,7 @@ export default React.memo(function IndexPage() {
 
   return (
     <div className="h-screen auto-cols-fr auto-rows-fr grid place-items-center">
-      <span
-        className="cursor-pointer h-5 w-5 i-heroicons-outline:arrow-right hover-larger"
-        onClick={() => navigate('/demo')}
-      />
+      <span className="cursor-pointer h-5 w-5 i-heroicons:arrow-right hover-larger" onClick={() => navigate('/demo')} />
     </div>
   )
 })

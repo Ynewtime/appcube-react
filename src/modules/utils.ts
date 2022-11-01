@@ -66,3 +66,5 @@ export const getCookie = (key: string) => {
   }
   return null
 }
+
+export const formatUrl = (url: string) => (url.endsWith('/') ? url : url + '/')

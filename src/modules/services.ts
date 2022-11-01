@@ -1,9 +1,10 @@
 /**
  *  Run Time Services
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import APPCUBE_API from '@/appcubeApi'
 import { GET_ACCESS_TOKEN_INTERVAL, GET_CSRF_TOKEN_INTERVAL } from '@/constants'
-import axios from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 
 axios.defaults.withCredentials = true
 
@@ -26,6 +27,14 @@ export const getAccessToken = async () => {
   return access_token
 }
 
+export const getCsrfToken = async (accessToken?: string) => {
+  if (accessToken) axios.defaults.headers.common['Access-Token'] = accessToken
+  const {
+    data: { result },
+  } = await axios.post<Res<string>>(APPCUBE_API.CSRF_TOKEN)
+  return result
+}
+
 // Handle Token
 if (import.meta.env.DEV) {
   const handleAccessToken = async () => {
@@ -39,11 +48,7 @@ if (import.meta.env.DEV) {
   // Make sure first request can be successful
   axios.interceptors.request.use(async function (config) {
     if (!config.headers) config.headers = {}
-    if (
-      config.url?.includes('/service/') &&
-      !Object.keys(config.headers).includes('csrf-token') &&
-      !Object.keys(config.headers.common).includes('csrf-token')
-    ) {
+    if (config.url?.includes('/service/') && !Object.keys(config.headers).includes('csrf-token') && !Object.keys(config.headers.common || {}).includes('csrf-token')) {
       const res = await fetch(APPCUBE_API.CSRF_TOKEN, { method: 'POST' })
       const { result } = await res.json()
       if (result) {
@@ -71,3 +76,21 @@ export default axios
 // Custom API
 
 // ====================================
+
+export const get = async <T = any, D = any>(url: string, config?: AxiosRequestConfig<D>) => {
+  try {
+    const res = await axios.get<T, AxiosResponse<T, D>>(url, config)
+    return res.data
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const post = async <T = any, D = any>(url: string, data?: D, config?: AxiosRequestConfig<D>) => {
+  try {
+    const res = await axios.post<T, AxiosResponse<T, D>, D>(url, data, config)
+    return res.data
+  } catch (error) {
+    console.error(error)
+  }
+}

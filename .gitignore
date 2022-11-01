@@ -16,11 +16,9 @@ temp
 .eslintcache
 
 # others
-scripts/appcube-scripts/**
-!scripts/appcube-scripts/**.ts
-!scripts/appcube-scripts/**.http
-!scripts/appcube-scripts/tsconfig.json
-
+scripts/appcube-scripts/**/**.js
+scripts/appcube-scripts/**/**.map
+scripts/appcube-scripts/**/**.tsbuildinfo
 
 # Compiled source #
 ###################

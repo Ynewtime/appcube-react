@@ -11,7 +11,7 @@ export default function OopsPage() {
       <section className="flex flex-col space-y-8 items-center justify-center">
         <div className="font-bold text-2xl">Oops, 404 Page Not Found.</div>
         <a className="cursor-pointer flex space-x-4 text-base items-center" onClick={() => navigate('/')}>
-          <div className="h-4 w-4 i-heroicons-outline:arrow-left" />
+          <div className="h-4 w-4 i-heroicons:arrow-left" />
           <span>{t('back_to_index_page')}</span>
         </a>
       </section>

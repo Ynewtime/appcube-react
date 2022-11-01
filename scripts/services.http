@@ -34,6 +34,24 @@ Content-Type: application/json
 
 ###
 
+# @name deactivateScript
+PUT {{url}}/u-route/baas/metadata/v1.0/Script/{{scriptId}}
+Access-Token: {{accessToken}}
+Content-Type: application/json
+
+{ "active": false }
+
+###
+
+# @name activateScript
+PUT {{url}}/u-route/baas/metadata/v1.0/Script/{{scriptId}}
+Access-Token: {{accessToken}}
+Content-Type: application/json
+
+{ "active": true }
+
+###
+
 # @name getScriptById
 GET {{url}}/u-route/baas/metadata/v1.0/Script/{{scriptId}}
 Access-Token: {{accessToken}}

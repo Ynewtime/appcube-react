@@ -3,7 +3,7 @@
  *  Build Time Services
  */
 import APPCUBE_API from '@/appcubeApi'
-import { error, success } from '@/modules/utils'
+import { error, success, formatUrl } from '@/modules/utils'
 import axios from 'axios'
 import dayjs from 'dayjs'
 import fs from 'fs'
@@ -20,18 +20,20 @@ axios.defaults.baseURL = APPCUBE_DOMAIN
 axios.defaults.withCredentials = true
 
 export const getAccessToken = async () => {
-  const cachePath = path.resolve(__dirname, './temp/cache.json')
+  const tempPath = path.resolve(__dirname, './temp')
+  if (!fs.existsSync(tempPath)) fs.mkdirSync(tempPath)
+  const cachePath = path.resolve(tempPath, 'cache.json')
   if (fs.existsSync(cachePath)) {
     try {
       const cache = JSON.parse(fs.readFileSync(cachePath).toString())
-      if (dayjs(cache.time).isAfter(dayjs().subtract(1, 'hour')) && cache.accessToken) return cache.accessToken
+      if (dayjs(cache.time).isAfter(dayjs().subtract(cache.expires_in / 60, 'minute')) && cache.accessToken) return cache.accessToken
     } catch (e: any) {
       error(e.message)
       throw Error(e)
     }
   }
   const {
-    data: { access_token: accessToken },
+    data: { access_token: accessToken, expires_in },
   } = await axios.post<TokenResult>(APPCUBE_API.ACCESS_TOKEN, null, {
     params: {
       grant_type: 'client_credentials',
@@ -39,7 +41,7 @@ export const getAccessToken = async () => {
       client_secret: APPCUBE_CLIENT_SECRET,
     },
   })
-  fs.writeFileSync(cachePath, JSON.stringify({ time: new Date().toLocaleString(), accessToken }))
+  fs.writeFileSync(cachePath, JSON.stringify({ time: new Date().toLocaleString(), accessToken, expires_in }))
   return accessToken
 }
 
@@ -69,16 +71,16 @@ export const getScriptByName = async () => {
 }
 
 export const deactivateScript = async (scriptId: string) => {
-  const { data } = await axios.put<Res<number>>(APPCUBE_API.SCRIPT_METADATA + scriptId, { active: false })
+  const { data } = await axios.put<Res<number>>(formatUrl(APPCUBE_API.SCRIPT_METADATA) + scriptId, { active: false })
   return data
 }
 
 export const activateScript = async (scriptId: string) => {
-  const { data } = await axios.put<Res<number>>(APPCUBE_API.SCRIPT_METADATA + scriptId, { active: true })
+  const { data } = await axios.put<Res<number>>(formatUrl(APPCUBE_API.SCRIPT_METADATA) + scriptId, { active: true })
   return data
 }
 
 export const updateScript = async (scriptId: string, body: { content: string; jscode: string; sourceMap: string }) => {
-  const { data } = await axios.put<Res<number>>(APPCUBE_API.SCRIPT_METADATA + scriptId, body)
+  const { data } = await axios.put<Res<number>>(formatUrl(APPCUBE_API.SCRIPT_METADATA) + scriptId, body)
   return data
 }

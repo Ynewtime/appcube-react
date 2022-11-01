@@ -2,6 +2,29 @@
 
 // ====================================
 
+// Platform Types
+
+// ====================================
+
+type CurrencySetting = {
+  code: string
+  format: string
+  symbol: string
+  decimalsep: string
+  thousandsep: string
+  decimalPlaces: number
+  conversionRate: number
+}
+
+type SiteSettings = {
+  locale: string
+  currency: string
+  currencies: CurrencySetting[]
+  currencySetting: CurrencySetting
+}
+
+// ====================================
+
 // Common Services
 
 // ====================================

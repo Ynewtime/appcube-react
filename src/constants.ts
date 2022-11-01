@@ -7,7 +7,7 @@ import { getCookie } from './modules/utils'
  */
 export const FULL_MODE = true
 
-export const GET_ACCESS_TOKEN_INTERVAL = 60 * 60 * 1000
+export const GET_ACCESS_TOKEN_INTERVAL = 10 * 60 * 1000
 
 export const GET_CSRF_TOKEN_INTERVAL = 5 * 60 * 1000
 
